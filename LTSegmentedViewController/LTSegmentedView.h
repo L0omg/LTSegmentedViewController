@@ -12,6 +12,8 @@
 @interface LTSegmentedView : UIView<LTSegmentedViewProtocol>
 @property (nonatomic, copy) NSArray<__kindof LTSegmentedItem*> *items;
 @property (nonatomic, assign) NSInteger selectedIndex;
+@property (nonatomic, strong) UIView *contentView;
 
 - (instancetype) initWithItems:(NSArray<__kindof LTSegmentedItem*>*) items;
+- (LTSegmentedItem*) selectedItem;
 @end

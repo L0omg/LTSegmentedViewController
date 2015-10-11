@@ -27,7 +27,6 @@
             
             UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
             view.translatesAutoresizingMaskIntoConstraints = NO;
-            view.backgroundColor = [UIColor whiteColor];
             [self addSubview:view];
             
             view;

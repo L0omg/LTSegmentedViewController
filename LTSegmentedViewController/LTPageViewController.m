@@ -49,6 +49,11 @@ static NSString *const LTPageViewControllerContentScrollViewContentOffsetKVOKeyP
                 
                 [view addObserver:self forKeyPath:LTPageViewControllerContentScrollViewContentOffsetKVOKeyPath options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:LTPageViewControllerContentScrollViewContentOffsetKVOContext];
             }
+            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:didTransitionToViewController:)]) {
+                
+                [self.delegate pageViewController:self didTransitionToViewController:viewController];
+            }
         }
     }
 }
@@ -63,17 +68,20 @@ static NSString *const LTPageViewControllerContentScrollViewContentOffsetKVOKeyP
             UIScrollView *scrollView = [self pageViewControllerContentScrollView];
             if (scrollView.contentSize.width > scrollView.frame.size.width) {
                 
-                NSInteger curIndex = [self.dataSource pageViewController:self indexAtViewController:self.currentViewController];
                 CGFloat sWidth = CGRectGetWidth(scrollView.frame);
-                CGFloat percent = fmodf(scrollView.contentOffset.x, sWidth) / sWidth;
-                LTPageViewControllerScrollDirection direction = LTPageViewControllerScrollDirectionLeft;
-                if (scrollView.contentOffset.x > sWidth) {//由于UIPageViewController采用了重用机制，contentScrollView只会有3页
+                if (ABS(scrollView.contentOffset.x - sWidth) > 0.000001) {
                     
-                    direction = LTPageViewControllerScrollDirectionRight;
-                }
-                if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:currentIndex:scrollDirection:didScrollToPercent:)]) {
-                    
-                    [self.delegate pageViewController:self currentIndex:curIndex scrollDirection:direction didScrollToPercent:percent];
+                    NSInteger curIndex = [self.dataSource pageViewController:self indexAtViewController:self.currentViewController];
+                    CGFloat percent = fmodf(scrollView.contentOffset.x, sWidth) / sWidth;
+                    LTPageViewControllerScrollDirection direction = LTPageViewControllerScrollDirectionLeft;
+                    if (scrollView.contentOffset.x > sWidth) {//由于UIPageViewController采用了重用机制，contentScrollView只会有3页
+                        
+                        direction = LTPageViewControllerScrollDirectionRight;
+                    }
+                    if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:currentIndex:scrollDirection:didScrollToPercent:)]) {
+                        
+                        [self.delegate pageViewController:self currentIndex:curIndex scrollDirection:direction didScrollToPercent:percent];
+                    }
                 }
             }
         }
@@ -161,9 +169,7 @@ static NSString *const LTPageViewControllerContentScrollViewContentOffsetKVOKeyP
 
 #pragma mark UIPageViewControllerDelegate
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers{
-    
-    NSLog(@"pendingViewControllers :%@, %@", pendingViewControllers, pageViewController.viewControllers);
-    
+        
     if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:willTransitionToViewControllers:)]) {
         
         [self.delegate pageViewController:self willTransitionToViewControllers:pendingViewControllers];

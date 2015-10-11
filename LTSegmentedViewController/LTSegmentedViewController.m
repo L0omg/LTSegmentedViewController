@@ -34,6 +34,7 @@ static const CGFloat LTSegmentedViewControllerSegmentedViewHeight = 44.f;
         _segmentedView = segmentedView;
         _dataSource = dataSource;
         _segmentViewHeight = LTSegmentedViewControllerSegmentedViewHeight;
+        _embedSegmentedView = YES;
     }
     return self;
 }
@@ -63,33 +64,43 @@ static const CGFloat LTSegmentedViewControllerSegmentedViewHeight = 44.f;
 - (void) makeLayout{
 
     UIView *segmentView = self.segmentedView;
-    segmentView.translatesAutoresizingMaskIntoConstraints = NO;
     UIView *pageView = self.pageViewController.view;
     pageView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSString *v_VFL = @"V:[pageView]|";
+    NSString *v_VFL = @"[pageView]|";
     NSDictionary *dicView = nil;
-    if (segmentView) {
+    if (segmentView && self.isEmbedSegmentedView) {
         
+        segmentView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addSubview:segmentView];
         NSLayoutConstraint *heightSegmentedViewConstraint = [NSLayoutConstraint constraintWithItem:segmentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.f constant:self.segmentViewHeight];
         [heightSegmentedViewConstraint fm_ActiveToView:self.view];
         self.segmentedViewHeightConstraint = heightSegmentedViewConstraint;
         
-        v_VFL = [NSString stringWithFormat:@"|[segmentView]%@", v_VFL];
+        v_VFL = [NSString stringWithFormat:@"V:|[segmentView]%@", v_VFL];
         dicView = NSDictionaryOfVariableBindings(segmentView, pageView);
     }else{
         
-       v_VFL = [NSString stringWithFormat:@"|%@", v_VFL];
+       v_VFL = [NSString stringWithFormat:@"V:|%@", v_VFL];
         dicView = NSDictionaryOfVariableBindings(pageView);
     }
     
     NSArray *v_Constraints = [NSLayoutConstraint constraintsWithVisualFormat:v_VFL options:(NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing) metrics:nil views:dicView];
-    NSArray *h_Constarints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[segmentView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(segmentView)];
+    NSArray *h_Constarints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[pageView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(pageView)];
     [NSLayoutConstraint fm_ActiveConstraints:v_Constraints toView:self.view];
     [NSLayoutConstraint fm_ActiveConstraints:h_Constarints toView:self.view];
 }
 
-#pragma mark -Protocol
+#pragma mark -Public Methods
+/**
+ *  跳转至指定页
+ *
+ *  @param pageIndex pageIndex
+ */
+- (void) jumpToPage:(NSInteger) pageIndex{
+    
+    [self.pageViewController jumpToPage:pageIndex];
+}
+
 #pragma mark -Protocol
 #pragma mark LTPageViewControllerDataSource<NSObject>
 - (UIViewController*) pageViewController:(LTPageViewController*) pageViewController viewControllerAtIndex:(NSInteger) index{
@@ -118,7 +129,7 @@ static const CGFloat LTSegmentedViewControllerSegmentedViewHeight = 44.f;
 - (void) pageViewController:(LTPageViewController*) pageViewController didTransitionToViewController:(UIViewController*) viewController{
     
     if (self.segmentedView && [self.segmentedView respondsToSelector:@selector(segmentedView:didSelectedItemAtIndex:)]) {
-        NSInteger index = 0;
+        NSInteger index = [self.dataSource segmentedViewController:self indexAtViewController:viewController];
         [self.segmentedView segmentedView:self.segmentedView didSelectedItemAtIndex:index];
     }
     self.scrolling = NO;
@@ -146,7 +157,6 @@ static const CGFloat LTSegmentedViewControllerSegmentedViewHeight = 44.f;
         _pageViewController = [[LTPageViewController alloc] init];
         _pageViewController.delegate = self;
         _pageViewController.dataSource = self;
-        _pageViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
         [self willMoveToParentViewController:_pageViewController];
         [self addChildViewController:_pageViewController];
         [self.view addSubview:_pageViewController.view];

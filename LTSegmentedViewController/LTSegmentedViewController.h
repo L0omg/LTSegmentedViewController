@@ -18,9 +18,15 @@
 @end
 
 @interface LTSegmentedViewController : UIViewController
-@property (nonatomic, assign) CGFloat segmentViewHeight;/**< default 44.f*/
 @property (nonatomic, weak) id<LTSegmentedViewControllerDataSource> dataSource;
-
+@property (nonatomic, assign) CGFloat segmentViewHeight;/**< default 44.f*/
+@property (nonatomic, assign, getter=isEmbedSegmentedView) BOOL embedSegmentedView;/**< 是否将segmentedView嵌入到LTSegmentedViewController.view中, default YES*/
+/**
+ *  跳转至指定页
+ *
+ *  @param pageIndex pageIndex
+ */
+- (void) jumpToPage:(NSInteger) pageIndex;
 /**
  *  dataSource不为nil
  */
