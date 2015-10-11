@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3421AD751BC259B40013EDE3 /* ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421AD741BC259B40013EDE3 /* ContentViewController.m */; settings = {ASSET_TAGS = (); }; };
 		3474B8EE1BA5AD4100A5C391 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3474B8ED1BA5AD4100A5C391 /* main.m */; };
 		3474B8F11BA5AD4100A5C391 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3474B8F01BA5AD4100A5C391 /* AppDelegate.m */; };
 		3474B8F41BA5AD4100A5C391 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3474B8F31BA5AD4100A5C391 /* ViewController.m */; };
@@ -14,6 +15,11 @@
 		3474B8F91BA5AD4100A5C391 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3474B8F81BA5AD4100A5C391 /* Images.xcassets */; };
 		3474B8FC1BA5AD4100A5C391 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3474B8FA1BA5AD4100A5C391 /* LaunchScreen.xib */; };
 		3474B9081BA5AD4200A5C391 /* LTSegmentedViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3474B9071BA5AD4200A5C391 /* LTSegmentedViewControllerTests.m */; };
+		34D1E8611BA85E4C002A3A5B /* LTSegmentedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1E8601BA85E4C002A3A5B /* LTSegmentedItem.m */; };
+		34F0D2A21BAD6E3C002685C7 /* LTPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0D2A11BAD6E3C002685C7 /* LTPageViewController.m */; settings = {ASSET_TAGS = (); }; };
+		34F0D2A61BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0D2A51BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m */; settings = {ASSET_TAGS = (); }; };
+		34F0D2A91BAD7710002685C7 /* LTSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0D2A81BAD7710002685C7 /* LTSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
+		9C775C811BC90AC70090709B /* LTSegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C775C801BC90AC70090709B /* LTSegmentedViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3421AD731BC259B40013EDE3 /* ContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentViewController.h; sourceTree = "<group>"; };
+		3421AD741BC259B40013EDE3 /* ContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentViewController.m; sourceTree = "<group>"; };
 		3474B8E81BA5AD4100A5C391 /* LTSegmentedViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LTSegmentedViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3474B8EC1BA5AD4100A5C391 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3474B8ED1BA5AD4100A5C391 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -40,6 +48,17 @@
 		3474B9011BA5AD4200A5C391 /* LTSegmentedViewControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LTSegmentedViewControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3474B9061BA5AD4200A5C391 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3474B9071BA5AD4200A5C391 /* LTSegmentedViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTSegmentedViewControllerTests.m; sourceTree = "<group>"; };
+		34D1E85F1BA85E4C002A3A5B /* LTSegmentedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedItem.h; sourceTree = "<group>"; };
+		34D1E8601BA85E4C002A3A5B /* LTSegmentedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSegmentedItem.m; sourceTree = "<group>"; };
+		34F0D2A01BAD6E3C002685C7 /* LTPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTPageViewController.h; sourceTree = "<group>"; };
+		34F0D2A11BAD6E3C002685C7 /* LTPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTPageViewController.m; sourceTree = "<group>"; };
+		34F0D2A41BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+ActiveConstraint.h"; sourceTree = "<group>"; };
+		34F0D2A51BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+ActiveConstraint.m"; sourceTree = "<group>"; };
+		34F0D2A71BAD7710002685C7 /* LTSegmentedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedView.h; sourceTree = "<group>"; };
+		34F0D2A81BAD7710002685C7 /* LTSegmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSegmentedView.m; sourceTree = "<group>"; };
+		9C775C7F1BC90AC70090709B /* LTSegmentedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedViewController.h; sourceTree = "<group>"; };
+		9C775C801BC90AC70090709B /* LTSegmentedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSegmentedViewController.m; sourceTree = "<group>"; };
+		9C775C821BC90DF40090709B /* LTSegmentedViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedViewProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,10 +100,14 @@
 		3474B8EA1BA5AD4100A5C391 /* LTSegmentedViewController */ = {
 			isa = PBXGroup;
 			children = (
+				34F0D2A31BAD7240002685C7 /* AL */,
+				3474B9111BA5AD8200A5C391 /* Classes */,
 				3474B8EF1BA5AD4100A5C391 /* AppDelegate.h */,
 				3474B8F01BA5AD4100A5C391 /* AppDelegate.m */,
 				3474B8F21BA5AD4100A5C391 /* ViewController.h */,
 				3474B8F31BA5AD4100A5C391 /* ViewController.m */,
+				3421AD731BC259B40013EDE3 /* ContentViewController.h */,
+				3421AD741BC259B40013EDE3 /* ContentViewController.m */,
 				3474B8F51BA5AD4100A5C391 /* Main.storyboard */,
 				3474B8F81BA5AD4100A5C391 /* Images.xcassets */,
 				3474B8FA1BA5AD4100A5C391 /* LaunchScreen.xib */,
@@ -117,6 +140,47 @@
 				3474B9061BA5AD4200A5C391 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3474B9111BA5AD8200A5C391 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				34D1E85F1BA85E4C002A3A5B /* LTSegmentedItem.h */,
+				34D1E8601BA85E4C002A3A5B /* LTSegmentedItem.m */,
+				34F0D2A71BAD7710002685C7 /* LTSegmentedView.h */,
+				34F0D2A81BAD7710002685C7 /* LTSegmentedView.m */,
+				34F0D29F1BAD6E2C002685C7 /* LTPageViewController */,
+				9C775C7E1BC90A810090709B /* LTSegmentedViewController */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		34F0D29F1BAD6E2C002685C7 /* LTPageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				34F0D2A01BAD6E3C002685C7 /* LTPageViewController.h */,
+				34F0D2A11BAD6E3C002685C7 /* LTPageViewController.m */,
+			);
+			name = LTPageViewController;
+			sourceTree = "<group>";
+		};
+		34F0D2A31BAD7240002685C7 /* AL */ = {
+			isa = PBXGroup;
+			children = (
+				34F0D2A41BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.h */,
+				34F0D2A51BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m */,
+			);
+			name = AL;
+			sourceTree = "<group>";
+		};
+		9C775C7E1BC90A810090709B /* LTSegmentedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9C775C7F1BC90AC70090709B /* LTSegmentedViewController.h */,
+				9C775C801BC90AC70090709B /* LTSegmentedViewController.m */,
+				9C775C821BC90DF40090709B /* LTSegmentedViewProtocol.h */,
+			);
+			name = LTSegmentedViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,8 +283,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34F0D2A61BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m in Sources */,
+				34D1E8611BA85E4C002A3A5B /* LTSegmentedItem.m in Sources */,
 				3474B8F41BA5AD4100A5C391 /* ViewController.m in Sources */,
 				3474B8F11BA5AD4100A5C391 /* AppDelegate.m in Sources */,
+				9C775C811BC90AC70090709B /* LTSegmentedViewController.m in Sources */,
+				3421AD751BC259B40013EDE3 /* ContentViewController.m in Sources */,
+				34F0D2A21BAD6E3C002685C7 /* LTPageViewController.m in Sources */,
+				34F0D2A91BAD7710002685C7 /* LTSegmentedView.m in Sources */,
 				3474B8EE1BA5AD4100A5C391 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +488,7 @@
 				3474B90D1BA5AD4200A5C391 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3474B90E1BA5AD4200A5C391 /* Build configuration list for PBXNativeTarget "LTSegmentedViewControllerTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +497,7 @@
 				3474B9101BA5AD4200A5C391 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

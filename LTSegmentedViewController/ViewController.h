@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ViewController : UIViewController
-
+#import "LTPageViewController.h"
+@interface ViewController : UIViewController<LTPageViewControllerDataSource, LTPageViewControllerDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) LTPageViewController *pageViewController;
 
 @end
 
