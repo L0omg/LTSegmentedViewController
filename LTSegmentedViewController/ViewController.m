@@ -29,18 +29,28 @@
 
 @implementation ViewController
 
+- (void) loadView{
+    
+    self.view = [[UIView alloc] initWithFrame:CGRectZero];
+    [super loadView];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     self.viewControllers = @[self.firstViewController, self.secondViewController, self.thirdViewController, self.fourthViewController, self.fifthViewController];
     
     UIView *pageView = self.segmentedViewController.view;
     pageView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    NSArray *v_Constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[pageView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(pageView)];
+    NSLayoutConstraint *top_Constraint = [NSLayoutConstraint constraintWithItem:pageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.f constant:0.f];
+    NSArray *v_Constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[pageView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(pageView)];
     NSArray *h_Constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[pageView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(pageView)];
     [NSLayoutConstraint fm_ActiveConstraints:v_Constraints toView:self.view];
     [NSLayoutConstraint fm_ActiveConstraints:h_Constraints toView:self.view];
+    [top_Constraint fm_ActiveToView:self.view];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -124,7 +134,7 @@
         [item5.titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh + 13 forAxis:UILayoutConstraintAxisHorizontal];
         
         
-        LTSegmentedView *segmentedView = [[LTCoverSegmentedView alloc] initWithItems:@[ item1, item2, item3, item4, item5]];
+        LTSegmentedView *segmentedView = [[NSClassFromString(self.segmentViewClassName) alloc] initWithItems:@[ item1, item2, item3, item4, item5]];
         segmentedView.contentView.backgroundColor = [UIColor redColor];
         _segmentedView = segmentedView;
     }

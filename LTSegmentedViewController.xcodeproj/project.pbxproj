@@ -22,6 +22,7 @@
 		34F0D2A21BAD6E3C002685C7 /* LTPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0D2A11BAD6E3C002685C7 /* LTPageViewController.m */; settings = {ASSET_TAGS = (); }; };
 		34F0D2A61BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0D2A51BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m */; settings = {ASSET_TAGS = (); }; };
 		34F0D2A91BAD7710002685C7 /* LTSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0D2A81BAD7710002685C7 /* LTSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
+		9C1853B61BCB9175008C8152 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1853B51BCB9175008C8152 /* RootViewController.m */; settings = {ASSET_TAGS = (); }; };
 		9C775C811BC90AC70090709B /* LTSegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C775C801BC90AC70090709B /* LTSegmentedViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,8 @@
 		34F0D2A51BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+ActiveConstraint.m"; sourceTree = "<group>"; };
 		34F0D2A71BAD7710002685C7 /* LTSegmentedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedView.h; sourceTree = "<group>"; };
 		34F0D2A81BAD7710002685C7 /* LTSegmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSegmentedView.m; sourceTree = "<group>"; };
+		9C1853B41BCB9174008C8152 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		9C1853B51BCB9175008C8152 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		9C775C7F1BC90AC70090709B /* LTSegmentedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedViewController.h; sourceTree = "<group>"; };
 		9C775C801BC90AC70090709B /* LTSegmentedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSegmentedViewController.m; sourceTree = "<group>"; };
 		9C775C821BC90DF40090709B /* LTSegmentedViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedViewProtocol.h; sourceTree = "<group>"; };
@@ -114,6 +117,8 @@
 				3474B9111BA5AD8200A5C391 /* Classes */,
 				3474B8EF1BA5AD4100A5C391 /* AppDelegate.h */,
 				3474B8F01BA5AD4100A5C391 /* AppDelegate.m */,
+				9C1853B41BCB9174008C8152 /* RootViewController.h */,
+				9C1853B51BCB9175008C8152 /* RootViewController.m */,
 				3474B8F21BA5AD4100A5C391 /* ViewController.h */,
 				3474B8F31BA5AD4100A5C391 /* ViewController.m */,
 				3421AD731BC259B40013EDE3 /* ContentViewController.h */,
@@ -310,6 +315,7 @@
 				34DF76C81BCA4073003C921E /* LTCoverSegmentedView.m in Sources */,
 				34F0D2A91BAD7710002685C7 /* LTSegmentedView.m in Sources */,
 				34DF76C51BCA3178003C921E /* LTUnderLineSegmentedView.m in Sources */,
+				9C1853B61BCB9175008C8152 /* RootViewController.m in Sources */,
 				3474B8EE1BA5AD4100A5C391 /* main.m in Sources */,
 				34DF76C11BC9F8CC003C921E /* LTWYSegmentedView.m in Sources */,
 			);

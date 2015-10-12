@@ -9,6 +9,6 @@
 #import "LTSegmentedView.h"
 
 @interface LTUnderLineSegmentedView : LTSegmentedView
-@property (nonatomic, assign) CGFloat underLineheight;
-@property (nonatomic, strong) UIColor *underLineColor;
+@property (nonatomic, assign) CGFloat underLineheight;/**< 下划线高度，default 2*/
+@property (nonatomic, strong) UIColor *underLineColor;/**< 下划线颜色，default blueColor*/
 @end

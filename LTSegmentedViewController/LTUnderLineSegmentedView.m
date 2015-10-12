@@ -8,6 +8,12 @@
 
 #import "LTUnderLineSegmentedView.h"
 #import "NSLayoutConstraint+ActiveConstraint.h"
+
+#pragma mark -Constant Define
+static const CGFloat LTUnderLineSegmentedViewUnderLineDefaultHeight = 2.f;
+//static UIColor *const LTUnderLineSegmentedViewUnderLineDefaultColor = [UIColor blueColor];//这样定义有什么问题呢
+#define LTUnderLineSegmentedViewUnderLineDefaultColor [UIColor blueColor]
+
 @interface LTUnderLineSegmentedView()
 @property (nonatomic, strong) UIView *underLineView;
 @property (nonatomic, strong) NSLayoutConstraint *underLineHeightConstraint;
@@ -22,8 +28,8 @@
     self = [super initWithItems:items];
     if (self) {
         
-        self.underLineColor = [UIColor blueColor];
-        self.underLineheight = 2;
+        self.underLineColor = LTUnderLineSegmentedViewUnderLineDefaultColor;
+        self.underLineheight = LTUnderLineSegmentedViewUnderLineDefaultHeight;
         
         UIView* underLineView = self.underLineView;
         [self.contentView addSubview:underLineView];

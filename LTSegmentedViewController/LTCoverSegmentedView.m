@@ -8,6 +8,11 @@
 
 #import "LTCoverSegmentedView.h"
 #import "NSLayoutConstraint+ActiveConstraint.h"
+
+#pragma mark -Constant Define
+#define LTCoverSegmentedViewCoverOffset UIOffsetMake(5, 20)
+#define LTCoverSegmentedViewCoverColor [UIColor colorWithWhite:1.f alpha:0.5]
+
 @class LTCoverView;
 @interface LTCoverSegmentedView()
 @property (nonatomic, strong) LTCoverView *coverView;
@@ -24,8 +29,8 @@
     self = [super initWithItems:items];
     if (self) {
         
-        self.coverUIOffset = UIOffsetMake(5, 20);
-        self.coverColor = [UIColor colorWithWhite:1.f alpha:0.5];
+        self.coverUIOffset = LTCoverSegmentedViewCoverOffset;
+        self.coverColor = LTCoverSegmentedViewCoverColor;
         
         UIView *coverView = self.coverView;
         [self.contentView addSubview:coverView];

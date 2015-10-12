@@ -15,10 +15,14 @@
 
 @implementation ContentViewController
 
+- (void) loadView{
+    self.view = [[UIView alloc] initWithFrame:CGRectZero];
+    [super loadView];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
+    // Do any additional setup after loading the view    
     UILabel *label = self.titleLabel;
     [self.view addSubview:label];
     
