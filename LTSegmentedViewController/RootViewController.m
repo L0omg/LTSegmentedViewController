@@ -22,16 +22,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"LTSegmentedViewController Demo";
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self makeLayout];
 }
 
 - (void) makeLayout{
     
     UITableView *tableView = self.tableView;
-    id<UILayoutSupport> topLayoutGuid = self.topLayoutGuide;
     [self.view addSubview:tableView];
     
-    NSArray *v_Constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayoutGuid][tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(topLayoutGuid ,tableView)];
+    NSArray *v_Constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(tableView)];
     NSArray *h_Constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(tableView)];
     [NSLayoutConstraint fm_ActiveConstraints:v_Constraints toView:self.view];
     [NSLayoutConstraint fm_ActiveConstraints:h_Constraints toView:self.view];

@@ -23,6 +23,7 @@
 		34F0D2A61BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0D2A51BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m */; settings = {ASSET_TAGS = (); }; };
 		34F0D2A91BAD7710002685C7 /* LTSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0D2A81BAD7710002685C7 /* LTSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
 		9C1853B61BCB9175008C8152 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1853B51BCB9175008C8152 /* RootViewController.m */; settings = {ASSET_TAGS = (); }; };
+		9C1853BA1BCB9AC0008C8152 /* libOAStackView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1853B81BCB9AC0008C8152 /* libOAStackView.a */; settings = {ASSET_TAGS = (); }; };
 		9C775C811BC90AC70090709B /* LTSegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C775C801BC90AC70090709B /* LTSegmentedViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,8 @@
 		34F0D2A81BAD7710002685C7 /* LTSegmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSegmentedView.m; sourceTree = "<group>"; };
 		9C1853B41BCB9174008C8152 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		9C1853B51BCB9175008C8152 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		9C1853B81BCB9AC0008C8152 /* libOAStackView.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOAStackView.a; sourceTree = "<group>"; };
+		9C1853B91BCB9AC0008C8152 /* OAStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAStackView.h; sourceTree = "<group>"; };
 		9C775C7F1BC90AC70090709B /* LTSegmentedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedViewController.h; sourceTree = "<group>"; };
 		9C775C801BC90AC70090709B /* LTSegmentedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSegmentedViewController.m; sourceTree = "<group>"; };
 		9C775C821BC90DF40090709B /* LTSegmentedViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedViewProtocol.h; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C1853BA1BCB9AC0008C8152 /* libOAStackView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +99,7 @@
 		3474B8DF1BA5AD4100A5C391 = {
 			isa = PBXGroup;
 			children = (
+				9C1853B71BCB9A9F008C8152 /* OAStackView */,
 				3474B8EA1BA5AD4100A5C391 /* LTSegmentedViewController */,
 				3474B9041BA5AD4200A5C391 /* LTSegmentedViewControllerTests */,
 				3474B8E91BA5AD4100A5C391 /* Products */,
@@ -193,6 +198,15 @@
 				34F0D2A51BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m */,
 			);
 			name = AL;
+			sourceTree = "<group>";
+		};
+		9C1853B71BCB9A9F008C8152 /* OAStackView */ = {
+			isa = PBXGroup;
+			children = (
+				9C1853B81BCB9AC0008C8152 /* libOAStackView.a */,
+				9C1853B91BCB9AC0008C8152 /* OAStackView.h */,
+			);
+			name = OAStackView;
 			sourceTree = "<group>";
 		};
 		9C775C7E1BC90A810090709B /* LTSegmentedViewController */ = {
@@ -447,6 +461,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = LTSegmentedViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -457,6 +479,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = LTSegmentedViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

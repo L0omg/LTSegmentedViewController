@@ -8,8 +8,9 @@
 
 #import "LTSegmentedView.h"
 #import "NSLayoutConstraint+ActiveConstraint.h"
+#import "OAStackView.h"
 @interface LTSegmentedView ()
-@property (nonatomic, strong) UIStackView *containerView;
+@property (nonatomic, strong) OAStackView *containerView;
 @property (nonatomic, copy) NSMutableArray<__kindof LTSegmentedItem*> *p_mItems;
 @end
 
@@ -33,12 +34,11 @@
         
         _containerView = ({
         
-            UIStackView *stackView = [[UIStackView alloc] initWithArrangedSubviews:items];
+            OAStackView *stackView = [[OAStackView alloc] initWithArrangedSubviews:items];
             stackView.translatesAutoresizingMaskIntoConstraints = NO;
             stackView.axis = UILayoutConstraintAxisHorizontal;
-            stackView.distribution = UIStackViewDistributionFillEqually;
-            stackView.alignment = UIStackViewAlignmentFill;
-            stackView.spacing = 0.f;
+            stackView.distribution = OAStackViewDistributionFillEqually;
+            stackView.alignment = OAStackViewAlignmentFill;
             [_contentView addSubview:stackView];
             
             stackView;
