@@ -110,7 +110,18 @@ static NSString *const LTPageViewControllerContentScrollViewContentOffsetKVOKeyP
     if (viewController) {
         
         self.currentViewController = viewController;
-        [self.pageViewController setViewControllers:@[viewController] direction:direction animated:YES completion:NULL];
+        __weak typeof(self) weakSelf = self;
+        __weak typeof(viewController) weakViewController = viewController;
+        [self.pageViewController setViewControllers:@[viewController] direction:direction animated:YES completion:^(BOOL finish){
+            //TODO 解决当跳跃切换时，比较直接从pageIndex=0跳转到pageindex=5，然后左右滑动时只会显示0和5对应的两个页面。(参考链接: http://www.cnblogs.com/firefff/p/3955370.html?utm_source=tuicool&utm_medium=referral)
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (finish && weakViewController) {
+                    
+                    [weakSelf.pageViewController setViewControllers:@[weakViewController] direction:direction animated:NO completion:NULL];
+                }
+            });
+        }];
         if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:didTransitionToViewController:)]) {
             
             [self.delegate pageViewController:self didTransitionToViewController:viewController];
