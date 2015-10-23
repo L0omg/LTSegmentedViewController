@@ -19,7 +19,7 @@ static const CGFloat LTUnderLineSegmentedViewUnderLineDefaultHeight = 2.f;
 @property (nonatomic, strong) UIView *underLineView;
 @property (nonatomic, strong) NSLayoutConstraint *underLineHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *underLineWidthConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *underLineLedingConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *underLineLeadingConstraint;
 @end
 
 @implementation LTUnderLineSegmentedView
@@ -37,14 +37,14 @@ static const CGFloat LTUnderLineSegmentedViewUnderLineDefaultHeight = 2.f;
         
         NSLayoutConstraint *bottom_Constraint = [NSLayoutConstraint constraintWithItem:underLineView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.f constant:0.f];
         NSLayoutConstraint *height_Constraint = [NSLayoutConstraint constraintWithItem:underLineView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.f constant:self.underLineheight];
-        NSLayoutConstraint *leading_Constraint = [NSLayoutConstraint constraintWithItem:underLineView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:[self.items firstObject] attribute:NSLayoutAttributeLeading multiplier:1.f constant:0.f];
-        NSLayoutConstraint *width_Constraint = [NSLayoutConstraint constraintWithItem:underLineView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:[self.items firstObject] attribute:NSLayoutAttributeWidth multiplier:1.f constant:0.f];
+        NSLayoutConstraint *leading_Constraint = [NSLayoutConstraint constraintWithItem:underLineView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0.f];
+        NSLayoutConstraint *width_Constraint = [NSLayoutConstraint constraintWithItem:underLineView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.f constant:self.itemWidth];
         [bottom_Constraint fm_ActiveToView:self.contentView];
         [height_Constraint fm_ActiveToView:self.contentView];
         [leading_Constraint fm_ActiveToView:self.contentView];
         [width_Constraint fm_ActiveToView:self.contentView];
         self.underLineHeightConstraint = height_Constraint;
-        self.underLineLedingConstraint = leading_Constraint;
+        self.underLineLeadingConstraint = leading_Constraint;
         self.underLineWidthConstraint = width_Constraint;
     }
     return self;
@@ -61,7 +61,9 @@ static const CGFloat LTUnderLineSegmentedViewUnderLineDefaultHeight = 2.f;
 #pragma mark -Private Methods
 - (void) adjustUnderLinePosition{
     
-    self.underLineLedingConstraint.constant = (self.itemWidth * self.selectedIndex);
+    self.underLineLeadingConstraint.constant = (self.itemWidth * self.selectedIndex);
+    self.underLineWidthConstraint.constant = self.itemWidth;
+    self.underLineHeightConstraint.constant = self.underLineheight;
 }
 
 #pragma mark -Protocol
@@ -81,10 +83,10 @@ static const CGFloat LTUnderLineSegmentedViewUnderLineDefaultHeight = 2.f;
     if (index != self.selectedIndex && index >= 0 && index < self.items.count) {
         
         NSInteger frontIndex = [self frontIndex:index another:self.selectedIndex];
-        self.underLineLedingConstraint.constant = (itemWidth * frontIndex) + itemWidth * percent;
+        self.underLineLeadingConstraint.constant = (itemWidth * frontIndex) + itemWidth * percent;
     }else{
         
-        self.underLineLedingConstraint.constant = (itemWidth * self.selectedIndex);
+        self.underLineLeadingConstraint.constant = (itemWidth * self.selectedIndex);
     }
 }
 

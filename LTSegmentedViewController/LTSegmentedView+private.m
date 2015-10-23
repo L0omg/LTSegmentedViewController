@@ -11,7 +11,7 @@
 @implementation LTSegmentedView (private)
 - (LTSegmentedItem*) selectedItem{
     
-    if (self.selectedIndex >= 0 && self.selectedIndex < self.items.count) {
+    if ([self isValidIndex:self.selectedIndex]) {
         
         return self.items[self.selectedIndex];
     }

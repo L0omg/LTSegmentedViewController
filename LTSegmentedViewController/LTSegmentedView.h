@@ -17,4 +17,7 @@
 
 - (instancetype) initWithItems:(NSArray<__kindof LTSegmentedItem*>*) items;
 - (void) reloadItems;
+- (void) addItem:(LTSegmentedItem*) item;
+- (void) removeItemAtIndex:(NSInteger) index;
+- (void) insertItem:(LTSegmentedItem*) item atIndex:(NSInteger) index;
 @end

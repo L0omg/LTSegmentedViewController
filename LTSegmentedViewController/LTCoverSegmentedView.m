@@ -36,10 +36,10 @@
         UIView *coverView = self.coverView;
         [self.contentView addSubview:coverView];
         
-        NSLayoutConstraint *centerX_Constraint = [NSLayoutConstraint constraintWithItem:coverView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.selectedItem attribute:NSLayoutAttributeCenterX multiplier:1.f constant:0];
-        NSLayoutConstraint *centerY_Constraint = [NSLayoutConstraint constraintWithItem:coverView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.selectedItem attribute:NSLayoutAttributeCenterY multiplier:1.f constant:0];
-        NSLayoutConstraint *width_Constraint = [NSLayoutConstraint constraintWithItem:coverView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.selectedItem attribute:NSLayoutAttributeWidth multiplier:1.f constant:-self.coverUIOffset.horizontal];
-        NSLayoutConstraint *height_Constraint = [NSLayoutConstraint constraintWithItem:coverView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.selectedItem attribute:NSLayoutAttributeHeight multiplier:1.f constant:-self.coverUIOffset.vertical];
+        NSLayoutConstraint *centerX_Constraint = [NSLayoutConstraint constraintWithItem:coverView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0];
+        NSLayoutConstraint *centerY_Constraint = [NSLayoutConstraint constraintWithItem:coverView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.f constant:0];
+        NSLayoutConstraint *width_Constraint = [NSLayoutConstraint constraintWithItem:coverView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.f constant:MAX(0, (-self.coverUIOffset.horizontal + self.itemWidth))];
+        NSLayoutConstraint *height_Constraint = [NSLayoutConstraint constraintWithItem:coverView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeHeight multiplier:1.f constant:-self.coverUIOffset.vertical];
         [NSLayoutConstraint fm_ActiveConstraints:@[centerX_Constraint, centerY_Constraint, width_Constraint, height_Constraint] toView:self.contentView];
         
         self.coverViewCenterXConstraint = centerX_Constraint;
@@ -62,7 +62,9 @@
 #pragma mark -Private Methods
 - (void) adjustCoverPosition{
     
-    self.coverViewCenterXConstraint.constant = (self.itemWidth * self.selectedIndex);
+    self.coverViewCenterXConstraint.constant = (self.itemWidth * (self.selectedIndex + 0.5f));
+    self.coverViewHeightConstraint.constant = -self.coverUIOffset.vertical;
+    self.coverViewWidthConstraint.constant = MAX(0, (-self.coverUIOffset.horizontal + self.itemWidth));
 }
 
 #pragma mark -Protocol
@@ -82,7 +84,7 @@
     if (index != self.selectedIndex && index >= 0 && index < self.items.count) {
         
         NSInteger frontIndex = [self frontIndex:index another:self.selectedIndex];
-        self.coverViewCenterXConstraint.constant = (itemWidth * frontIndex) + itemWidth * percent;
+        self.coverViewCenterXConstraint.constant = (itemWidth * (frontIndex + 0.5f)) + itemWidth * percent;
     }else{
         
         [self adjustCoverPosition];
@@ -104,9 +106,8 @@
 
 - (void) setCoverUIOffset:(UIOffset)coverUIOffset{
     
-    self.coverViewHeightConstraint.constant = -coverUIOffset.vertical;
-    self.coverViewWidthConstraint.constant = -coverUIOffset.horizontal;
     _coverUIOffset = coverUIOffset;
+    [self adjustCoverPosition];
 }
 
 - (void) setCoverColor:(UIColor *)coverColor{

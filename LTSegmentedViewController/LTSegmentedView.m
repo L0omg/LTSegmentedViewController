@@ -11,7 +11,7 @@
 #import "LTSegmentedView+private.h"
 #import "OAStackView.h"
 
-static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 6;
+static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
 
 @interface LTSegmentedView ()
 @property (nonatomic, strong) OAStackView *containerView;
@@ -75,10 +75,63 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 6;
     return self;
 }
 
+- (void) layoutSubviews{
+    
+    [super layoutSubviews];
+    [self reloadItems];
+}
+
 #pragma mark -Public Methods
 - (void) reloadItems{
     
+    [self adjustContentSize];
     self.selectedIndex = self.selectedIndex;/*调整contentOffset*/
+}
+
+- (void) addItem:(LTSegmentedItem*) item{
+    
+    [self.containerView addArrangedSubview:item];
+    [self.p_mItems addObject:item];
+    [self reloadItems];
+}
+
+- (void) removeItemAtIndex:(NSInteger) index{
+    
+    if ([self isValidIndex:index]) {
+        
+        LTSegmentedItem *item = self.items[index];
+        [self removeItem:item];
+    }
+}
+
+- (void) removeItem:(LTSegmentedItem*) item{
+    
+    [self.containerView removeArrangedSubview:item];
+    [self.p_mItems removeObject:item];
+    [self reloadItems];
+}
+
+- (void) insertItem:(LTSegmentedItem*) item atIndex:(NSInteger) index{
+    
+    [self.containerView insertArrangedSubview:item atIndex:index];
+    [self.p_mItems insertObject:item atIndex:index];
+    [self reloadItems];
+}
+
+#pragma mark -Private Methods
+- (void) adjustContentSize{
+    
+    if (self.contentWidthConstraint) {
+        
+        [self.contentWidthConstraint fm_DeActiveInView:self.contentView];
+    }
+    
+    self.contentWidthConstraint = [NSLayoutConstraint constraintWithItem:self.containerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeWidth multiplier:self.p_mItems.count * 1.f / self.numberOfItemsPerScreen constant:0.f];
+    
+    if (self.contentWidthConstraint) {
+        
+        [self.contentWidthConstraint fm_ActiveToView:self.contentView];
+    }
 }
 
 #pragma mark -Protocol
@@ -174,17 +227,7 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 6;
             _numberOfItemsPerScreen = numberOfItemsPerScreen;
         }
         
-        if (self.contentWidthConstraint) {
-            
-            [self.contentWidthConstraint fm_DeActiveInView:self.contentView];
-        }
-        
-        self.contentWidthConstraint = [NSLayoutConstraint constraintWithItem:_containerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeWidth multiplier:self.p_mItems.count / _numberOfItemsPerScreen constant:0.f];
-        
-        if (self.contentWidthConstraint) {
-            
-            [self.contentWidthConstraint fm_ActiveToView:self.contentView];
-        }
+        [self reloadItems];
     }
 }
 @end

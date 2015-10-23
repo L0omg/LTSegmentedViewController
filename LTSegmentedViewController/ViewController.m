@@ -55,19 +55,34 @@
     [NSLayoutConstraint fm_ActiveConstraints:v_Constraints toView:self.view];
     [NSLayoutConstraint fm_ActiveConstraints:h_Constraints toView:self.view];
     
-    UIBarButtonItem* itemOne = [[UIBarButtonItem alloc] initWithTitle:@"one" style:UIBarButtonItemStyleDone target:self action:@selector(jumpToOnePage)];
-    UIBarButtonItem* itemTen = [[UIBarButtonItem alloc] initWithTitle:@"ten" style:UIBarButtonItemStyleDone target:self action:@selector(jumpToTenPage)];
-    self.navigationItem.rightBarButtonItems = @[itemOne, itemTen];
+    UIBarButtonItem* itemOne = [[UIBarButtonItem alloc] initWithTitle:@"+" style:UIBarButtonItemStyleDone target:self action:@selector(jumpToOnePage)];
+    UIBarButtonItem* itemTen = [[UIBarButtonItem alloc] initWithTitle:@"-" style:UIBarButtonItemStyleDone target:self action:@selector(jumpToTenPage)];
+    UIBarButtonItem* itemIns = [[UIBarButtonItem alloc] initWithTitle:@"^" style:UIBarButtonItemStyleDone target:self action:@selector(insertItem)];
+    self.navigationItem.rightBarButtonItems = @[itemOne, itemTen, itemIns];
 }
 
 - (void) jumpToOnePage{
     
-    [self.segmentedViewController jumpToPage:1];
+    [self.segmentedView addItem:[[LTSegmentedItem alloc] initWithTitle:[NSString stringWithFormat:@"%ld", (long)self.segmentedView.items.count] icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
+        
+        
+    }]];
+//    [self.segmentedViewController jumpToPage:1];
 }
 
 - (void) jumpToTenPage{
     
-    [self.segmentedViewController jumpToPage:8];
+    [self.segmentedView removeItemAtIndex:self.segmentedView.selectedIndex];
+//    [self.segmentedViewController jumpToPage:8];
+}
+
+- (void) insertItem{
+    
+    
+    [self.segmentedView insertItem:[[LTSegmentedItem alloc] initWithTitle:[NSString stringWithFormat:@"%ld", (long)self.segmentedView.items.count] icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
+        
+        
+    }] atIndex:self.segmentedView.selectedIndex];
 }
 
 - (void)didReceiveMemoryWarning {
