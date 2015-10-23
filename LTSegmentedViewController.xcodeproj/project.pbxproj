@@ -19,6 +19,7 @@
 		34DF76C11BC9F8CC003C921E /* LTWYSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DF76C01BC9F8CC003C921E /* LTWYSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
 		34DF76C51BCA3178003C921E /* LTUnderLineSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DF76C41BCA3178003C921E /* LTUnderLineSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
 		34DF76C81BCA4073003C921E /* LTCoverSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DF76C71BCA4073003C921E /* LTCoverSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
+		34EBBCB31BDA71350073458A /* LTSegmentedView+private.m in Sources */ = {isa = PBXBuildFile; fileRef = 34EBBCB21BDA71350073458A /* LTSegmentedView+private.m */; settings = {ASSET_TAGS = (); }; };
 		34F0D2A21BAD6E3C002685C7 /* LTPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0D2A11BAD6E3C002685C7 /* LTPageViewController.m */; settings = {ASSET_TAGS = (); }; };
 		34F0D2A61BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0D2A51BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.m */; settings = {ASSET_TAGS = (); }; };
 		34F0D2A91BAD7710002685C7 /* LTSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F0D2A81BAD7710002685C7 /* LTSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
@@ -63,6 +64,8 @@
 		34DF76C41BCA3178003C921E /* LTUnderLineSegmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTUnderLineSegmentedView.m; sourceTree = "<group>"; };
 		34DF76C61BCA4073003C921E /* LTCoverSegmentedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCoverSegmentedView.h; sourceTree = "<group>"; };
 		34DF76C71BCA4073003C921E /* LTCoverSegmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCoverSegmentedView.m; sourceTree = "<group>"; };
+		34EBBCB11BDA71350073458A /* LTSegmentedView+private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LTSegmentedView+private.h"; sourceTree = "<group>"; };
+		34EBBCB21BDA71350073458A /* LTSegmentedView+private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LTSegmentedView+private.m"; sourceTree = "<group>"; };
 		34F0D2A01BAD6E3C002685C7 /* LTPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTPageViewController.h; sourceTree = "<group>"; };
 		34F0D2A11BAD6E3C002685C7 /* LTPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTPageViewController.m; sourceTree = "<group>"; };
 		34F0D2A41BAD724A002685C7 /* NSLayoutConstraint+ActiveConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+ActiveConstraint.h"; sourceTree = "<group>"; };
@@ -171,6 +174,8 @@
 				34DF76C21BC9FC30003C921E /* LTDataDefine.h */,
 				34D1E85F1BA85E4C002A3A5B /* LTSegmentedItem.h */,
 				34D1E8601BA85E4C002A3A5B /* LTSegmentedItem.m */,
+				34EBBCB11BDA71350073458A /* LTSegmentedView+private.h */,
+				34EBBCB21BDA71350073458A /* LTSegmentedView+private.m */,
 				34F0D2A71BAD7710002685C7 /* LTSegmentedView.h */,
 				34F0D2A81BAD7710002685C7 /* LTSegmentedView.m */,
 				34DF76BF1BC9F8CC003C921E /* LTWYSegmentedView.h */,
@@ -336,6 +341,7 @@
 				9C1853B61BCB9175008C8152 /* RootViewController.m in Sources */,
 				3474B8EE1BA5AD4100A5C391 /* main.m in Sources */,
 				34DF76C11BC9F8CC003C921E /* LTWYSegmentedView.m in Sources */,
+				34EBBCB31BDA71350073458A /* LTSegmentedView+private.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

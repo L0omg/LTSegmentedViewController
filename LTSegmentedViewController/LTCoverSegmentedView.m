@@ -8,6 +8,7 @@
 
 #import "LTCoverSegmentedView.h"
 #import "NSLayoutConstraint+ActiveConstraint.h"
+#import "LTSegmentedView+private.h"
 
 #pragma mark -Constant Define
 #define LTCoverSegmentedViewCoverOffset UIOffsetMake(5, 20)
@@ -50,27 +51,41 @@
     return self;
 }
 
+#pragma mark -Public Methods
+- (void) reloadItems{
+    
+    [super reloadItems];
+    
+    [self adjustCoverPosition];
+}
+
+#pragma mark -Private Methods
+- (void) adjustCoverPosition{
+    
+    self.coverViewCenterXConstraint.constant = (self.itemWidth * self.selectedIndex);
+}
+
 #pragma mark -Protocol
 #pragma mark LTSegmentedViewProtocol <NSObject>
 - (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView didSelectedItemAtIndex:(NSInteger) index{
     
     [super segmentedView:segmentedView didSelectedItemAtIndex:index];
     
-    self.coverViewCenterXConstraint.constant = ((self.contentView.contentSize.width / self.items.count) * self.selectedIndex);
+    [self adjustCoverPosition];
 }
 
 - (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView willScrollToItemAtIndex:(NSInteger) index percent:(CGFloat) percent{
     
     [super segmentedView:segmentedView willScrollToItemAtIndex:index percent:percent];
 
-    CGFloat width = (self.contentView.contentSize.width / self.items.count);
+    CGFloat itemWidth = self.itemWidth;
     if (index != self.selectedIndex && index >= 0 && index < self.items.count) {
         
-        NSInteger frontIndex = MAX(MIN(index, self.selectedIndex), 0);
-        self.coverViewCenterXConstraint.constant = (width * frontIndex) + width * percent;
+        NSInteger frontIndex = [self frontIndex:index another:self.selectedIndex];
+        self.coverViewCenterXConstraint.constant = (itemWidth * frontIndex) + itemWidth * percent;
     }else{
         
-        self.coverViewCenterXConstraint.constant = ((width / self.items.count) * self.selectedIndex);
+        [self adjustCoverPosition];
     }
 }
 

@@ -16,5 +16,5 @@
 @property (nonatomic, assign) NSInteger numberOfItemsPerScreen;//default 4
 
 - (instancetype) initWithItems:(NSArray<__kindof LTSegmentedItem*>*) items;
-- (LTSegmentedItem*) selectedItem;
+- (void) reloadItems;
 @end

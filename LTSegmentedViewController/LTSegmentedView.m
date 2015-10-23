@@ -8,9 +8,10 @@
 
 #import "LTSegmentedView.h"
 #import "NSLayoutConstraint+ActiveConstraint.h"
+#import "LTSegmentedView+private.h"
 #import "OAStackView.h"
 
-static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
+static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 6;
 
 @interface LTSegmentedView ()
 @property (nonatomic, strong) OAStackView *containerView;
@@ -20,6 +21,8 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
 @end
 
 @implementation LTSegmentedView
+@synthesize selectedIndex = _selectedIndex;
+
 #pragma mark -LifeCycle
 - (instancetype) initWithItems:(NSArray<__kindof LTSegmentedItem*>*) items{
     
@@ -73,29 +76,18 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
 }
 
 #pragma mark -Public Methods
-- (LTSegmentedItem*) selectedItem{
+- (void) reloadItems{
     
-    if (self.selectedIndex >= 0 && self.selectedIndex < self.p_mItems.count) {
-        
-        return self.p_mItems[self.selectedIndex];
-    }
-    
-    return nil;
+    self.selectedIndex = self.selectedIndex;/*调整contentOffset*/
 }
 
 #pragma mark -Protocol
 #pragma mark LTSegmentedViewProtocol <NSObject>
 - (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView didSelectedItemAtIndex:(NSInteger) index{
 
-    NSInteger preIndex = self.selectedIndex;
     if (index != NSNotFound) {
         
         self.selectedIndex = index;
-    }
-    
-    if (preIndex != self.selectedIndex) {
-        
-        [self adjustContentOffsetFrom:preIndex to:self.selectedIndex];
     }
 }
 
@@ -106,7 +98,7 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
 
 - (void) adjustContentOffsetFrom:(NSInteger) preIndex to:(NSInteger) curIndex{
     
-    CGFloat itemWidth = (self.contentView.contentSize.width / self.items.count);
+    CGFloat itemWidth = self.itemWidth;
     CGFloat offset = curIndex * itemWidth;
     CGFloat curOffset = self.contentView.contentOffset.x;
     
@@ -115,32 +107,36 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
     BOOL isNeddAdjust = NO;
     if (preIndex > curIndex) {
         
-        if (((offset - itemWidth * 2) < curOffset) || (offset > curOffset + width)) {
+        if (((offset - itemWidth) < curOffset)) {
             
             isNeddAdjust = YES;
             fitOffset = offset - itemWidth;
         }
     }else if (preIndex < curIndex){
         
-        if ((offset + itemWidth * 2 > curOffset + width) || (offset < curOffset)) {
+        if ((offset + itemWidth * 2 > curOffset + width)) {
             
             isNeddAdjust = YES;
             fitOffset = offset - (width - 2 * itemWidth);
         }
-    }else{
+    }
+    
+    if (!isNeddAdjust) {
         
-        if (offset < curOffset) {
+        if ((offset + itemWidth > curOffset + width)) {
             
-        }else if (offset + itemWidth > curOffset + width){
+            isNeddAdjust = YES;
+            fitOffset = offset - width + itemWidth;
+        }else if ((offset < curOffset)){
             
+            isNeddAdjust = YES;
+            fitOffset = offset;
         }
     }
     
     if (isNeddAdjust) {
         
-        CGFloat maxOffset = self.contentView.contentSize.width - width;
-        CGFloat minOffset = 0.f;
-        fitOffset = MAX(minOffset, MIN(maxOffset, fitOffset));
+        fitOffset = [self validOffsetAt:fitOffset];
         [self.contentView setContentOffset:CGPointMake(fitOffset, self.contentView.contentOffset.y) animated:YES];
     }
 }
@@ -153,12 +149,17 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
 
 - (void) setSelectedIndex:(NSInteger)selectedIndex{
     
-    if (selectedIndex < 0 || selectedIndex >= self.p_mItems.count) {
-        
-        selectedIndex = 0;
-    }
+    selectedIndex = [self validIndexAt:selectedIndex];
     
+    NSInteger preIndex = _selectedIndex;
     _selectedIndex = selectedIndex;
+    
+    [self adjustContentOffsetFrom:preIndex to:selectedIndex];
+}
+
+- (NSInteger) selectedIndex{
+    
+    return [self validIndexAt:_selectedIndex];
 }
 
 - (void) setNumberOfItemsPerScreen:(NSInteger)numberOfItemsPerScreen{

@@ -7,6 +7,7 @@
 //
 
 #import "LTWYSegmentedView.h"
+#import "LTSegmentedView+private.h"
 
 #pragma mark -Constant Define
 static const CGFloat LTWYSegmentedViewDefaultTitleNormalFontSize = 10;
@@ -54,15 +55,14 @@ static const struct LTColor LTWYSegmentedViewDefaultTitleSelectedColor = {0xFF, 
     
     [super segmentedView:segmentedView willScrollToItemAtIndex:index percent:percent];
     
-    if (index < 0 || index >= self.items.count) {
+    if (![self isValidIndex:index]) {
         
         return;
     }
     
-    NSInteger maximumIndex = self.items.count - 1;
     percent = [[NSString stringWithFormat:@"%.3f", percent] floatValue];
     NSInteger frontIndex = self.selectedIndex;
-    NSInteger backIndex = MAX(MIN(maximumIndex, index), 0);
+    NSInteger backIndex = [self validIndexAt:index];
     
     if (frontIndex != backIndex) {
         

@@ -8,6 +8,7 @@
 
 #import "LTUnderLineSegmentedView.h"
 #import "NSLayoutConstraint+ActiveConstraint.h"
+#import "LTSegmentedView+private.h"
 
 #pragma mark -Constant Define
 static const CGFloat LTUnderLineSegmentedViewUnderLineDefaultHeight = 2.f;
@@ -49,27 +50,41 @@ static const CGFloat LTUnderLineSegmentedViewUnderLineDefaultHeight = 2.f;
     return self;
 }
 
+#pragma mark -Public Methods
+- (void) reloadItems{
+    
+    [super reloadItems];
+    
+    [self adjustUnderLinePosition];
+}
+
+#pragma mark -Private Methods
+- (void) adjustUnderLinePosition{
+    
+    self.underLineLedingConstraint.constant = (self.itemWidth * self.selectedIndex);
+}
+
 #pragma mark -Protocol
 #pragma mark LTSegmentedViewProtocol <NSObject>
 - (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView didSelectedItemAtIndex:(NSInteger) index{
     
     [super segmentedView:segmentedView didSelectedItemAtIndex:index];
 
-    self.underLineLedingConstraint.constant = ((self.contentView.contentSize.width / self.items.count) * self.selectedIndex);
+    [self adjustUnderLinePosition];
 }
 
 - (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView willScrollToItemAtIndex:(NSInteger) index percent:(CGFloat) percent{
     
     [super segmentedView:segmentedView willScrollToItemAtIndex:index percent:percent];
   
-    CGFloat width = (self.contentView.contentSize.width / self.items.count);
+    CGFloat itemWidth = self.itemWidth;
     if (index != self.selectedIndex && index >= 0 && index < self.items.count) {
         
-        NSInteger frontIndex = MAX(MIN(index, self.selectedIndex), 0);
-        self.underLineLedingConstraint.constant = (width * frontIndex) + width * percent;
+        NSInteger frontIndex = [self frontIndex:index another:self.selectedIndex];
+        self.underLineLedingConstraint.constant = (itemWidth * frontIndex) + itemWidth * percent;
     }else{
         
-        self.underLineLedingConstraint.constant = (width * self.selectedIndex);
+        self.underLineLedingConstraint.constant = (itemWidth * self.selectedIndex);
     }
 }
 
