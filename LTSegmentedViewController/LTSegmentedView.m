@@ -9,9 +9,14 @@
 #import "LTSegmentedView.h"
 #import "NSLayoutConstraint+ActiveConstraint.h"
 #import "OAStackView.h"
+
+static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
+
 @interface LTSegmentedView ()
 @property (nonatomic, strong) OAStackView *containerView;
 @property (nonatomic, copy) NSMutableArray<__kindof LTSegmentedItem*> *p_mItems;
+
+@property (nonatomic, strong) NSLayoutConstraint *contentWidthConstraint;
 @end
 
 @implementation LTSegmentedView
@@ -21,15 +26,18 @@
     self = [super initWithFrame:CGRectZero];
     if (self) {
         
+        _numberOfItemsPerScreen = kLTSegmentedViewDefaultNumberOfItemsPerScreen;
         _p_mItems = [items mutableCopy];
         
         _contentView = ({
         
-            UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-            view.translatesAutoresizingMaskIntoConstraints = NO;
-            [self addSubview:view];
+            UIScrollView *contentView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+            contentView.translatesAutoresizingMaskIntoConstraints = NO;
+            contentView.showsHorizontalScrollIndicator = NO;
+            contentView.showsVerticalScrollIndicator = NO;
+            [self addSubview:contentView];
             
-            view;
+            contentView;
         });
         
         _containerView = ({
@@ -47,13 +55,19 @@
         NSArray *v_ContentView_Constraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_contentView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentView)];
         NSArray *h_ContentView_Constraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_contentView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentView)];
         
-        NSArray *v_ContainerView_Constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_containerView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_containerView)];
-        NSArray *h_ContainerView_Constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_containerView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_containerView)];
+        NSLayoutConstraint *leading_ContainerView_Constraint = [NSLayoutConstraint constraintWithItem:_containerView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0.f];
+        NSLayoutConstraint *trailing_ContainerView_Constraint = [NSLayoutConstraint constraintWithItem:_containerView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeTrailing multiplier:1.f constant:0.f];
+        NSLayoutConstraint *top_ContainerView_Constraint = [NSLayoutConstraint constraintWithItem:_containerView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeTop multiplier:1.f constant:0.f];
+        NSLayoutConstraint *bottom_ContainerView_Constraint = [NSLayoutConstraint constraintWithItem:_containerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeBottom multiplier:1.f constant:0.f];
+        NSLayoutConstraint *height_Constraint = [NSLayoutConstraint constraintWithItem:_containerView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeHeight multiplier:1.f constant:0.f];
+        NSLayoutConstraint *width_Constraint = [NSLayoutConstraint constraintWithItem:_containerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeWidth multiplier:(items.count * 1.f / _numberOfItemsPerScreen) constant:0.f];
+        self.contentWidthConstraint = width_Constraint;
         
         [NSLayoutConstraint fm_ActiveConstraints:v_ContentView_Constraint toView:self];
         [NSLayoutConstraint fm_ActiveConstraints:h_ContentView_Constraint toView:self];
-        [NSLayoutConstraint fm_ActiveConstraints:v_ContainerView_Constraints toView:_contentView];
-        [NSLayoutConstraint fm_ActiveConstraints:h_ContainerView_Constraints toView:_contentView];
+        [NSLayoutConstraint fm_ActiveConstraints:@[top_ContainerView_Constraint, bottom_ContainerView_Constraint] toView:_contentView];
+        [NSLayoutConstraint fm_ActiveConstraints:@[leading_ContainerView_Constraint, trailing_ContainerView_Constraint] toView:_contentView];
+        [NSLayoutConstraint fm_ActiveConstraints:@[height_Constraint, width_Constraint] toView:_contentView];
     }
     return self;
 }
@@ -73,15 +87,62 @@
 #pragma mark LTSegmentedViewProtocol <NSObject>
 - (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView didSelectedItemAtIndex:(NSInteger) index{
 
+    NSInteger preIndex = self.selectedIndex;
     if (index != NSNotFound) {
         
         self.selectedIndex = index;
+    }
+    
+    if (preIndex != self.selectedIndex) {
+        
+        [self adjustContentOffsetFrom:preIndex to:self.selectedIndex];
     }
 }
 
 - (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView willScrollToItemAtIndex:(NSInteger) index percent:(CGFloat) percent{
     
     
+}
+
+- (void) adjustContentOffsetFrom:(NSInteger) preIndex to:(NSInteger) curIndex{
+    
+    CGFloat itemWidth = (self.contentView.contentSize.width / self.items.count);
+    CGFloat offset = curIndex * itemWidth;
+    CGFloat curOffset = self.contentView.contentOffset.x;
+    
+    CGFloat width = CGRectGetWidth(self.contentView.frame);
+    CGFloat fitOffset = curOffset;
+    BOOL isNeddAdjust = NO;
+    if (preIndex > curIndex) {
+        
+        if (((offset - itemWidth * 2) < curOffset) || (offset > curOffset + width)) {
+            
+            isNeddAdjust = YES;
+            fitOffset = offset - itemWidth;
+        }
+    }else if (preIndex < curIndex){
+        
+        if ((offset + itemWidth * 2 > curOffset + width) || (offset < curOffset)) {
+            
+            isNeddAdjust = YES;
+            fitOffset = offset - (width - 2 * itemWidth);
+        }
+    }else{
+        
+        if (offset < curOffset) {
+            
+        }else if (offset + itemWidth > curOffset + width){
+            
+        }
+    }
+    
+    if (isNeddAdjust) {
+        
+        CGFloat maxOffset = self.contentView.contentSize.width - width;
+        CGFloat minOffset = 0.f;
+        fitOffset = MAX(minOffset, MIN(maxOffset, fitOffset));
+        [self.contentView setContentOffset:CGPointMake(fitOffset, self.contentView.contentOffset.y) animated:YES];
+    }
 }
 
 #pragma mark -Accessor
@@ -98,5 +159,31 @@
     }
     
     _selectedIndex = selectedIndex;
+}
+
+- (void) setNumberOfItemsPerScreen:(NSInteger)numberOfItemsPerScreen{
+    
+    if (numberOfItemsPerScreen != _numberOfItemsPerScreen) {
+        
+        if (numberOfItemsPerScreen <= 0) {
+            
+            _numberOfItemsPerScreen = kLTSegmentedViewDefaultNumberOfItemsPerScreen;
+        }else{
+            
+            _numberOfItemsPerScreen = numberOfItemsPerScreen;
+        }
+        
+        if (self.contentWidthConstraint) {
+            
+            [self.contentWidthConstraint fm_DeActiveInView:self.contentView];
+        }
+        
+        self.contentWidthConstraint = [NSLayoutConstraint constraintWithItem:_containerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeWidth multiplier:self.p_mItems.count / _numberOfItemsPerScreen constant:0.f];
+        
+        if (self.contentWidthConstraint) {
+            
+            [self.contentWidthConstraint fm_ActiveToView:self.contentView];
+        }
+    }
 }
 @end

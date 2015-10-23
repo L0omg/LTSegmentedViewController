@@ -56,21 +56,21 @@
     
     [super segmentedView:segmentedView didSelectedItemAtIndex:index];
     
-    self.coverViewCenterXConstraint.constant = ((CGRectGetWidth(self.contentView.frame) / self.items.count) * self.selectedIndex);
+    self.coverViewCenterXConstraint.constant = ((self.contentView.contentSize.width / self.items.count) * self.selectedIndex);
 }
 
 - (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView willScrollToItemAtIndex:(NSInteger) index percent:(CGFloat) percent{
     
     [super segmentedView:segmentedView willScrollToItemAtIndex:index percent:percent];
 
+    CGFloat width = (self.contentView.contentSize.width / self.items.count);
     if (index != self.selectedIndex && index >= 0 && index < self.items.count) {
         
         NSInteger frontIndex = MAX(MIN(index, self.selectedIndex), 0);
-        CGFloat width = (CGRectGetWidth(self.contentView.frame) / self.items.count);
         self.coverViewCenterXConstraint.constant = (width * frontIndex) + width * percent;
     }else{
         
-        self.coverViewCenterXConstraint.constant = ((CGRectGetWidth(self.contentView.frame) / self.items.count) * self.selectedIndex);
+        self.coverViewCenterXConstraint.constant = ((width / self.items.count) * self.selectedIndex);
     }
 }
 

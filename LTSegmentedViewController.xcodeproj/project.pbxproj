@@ -25,6 +25,7 @@
 		9C1853B61BCB9175008C8152 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1853B51BCB9175008C8152 /* RootViewController.m */; settings = {ASSET_TAGS = (); }; };
 		9C1853BA1BCB9AC0008C8152 /* libOAStackView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1853B81BCB9AC0008C8152 /* libOAStackView.a */; settings = {ASSET_TAGS = (); }; };
 		9C775C811BC90AC70090709B /* LTSegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C775C801BC90AC70090709B /* LTSegmentedViewController.m */; settings = {ASSET_TAGS = (); }; };
+		9CF353FD1BD8D2C30022C7E7 /* fengxian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF353FC1BD8D2C30022C7E7 /* fengxian@2x.png */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		9C775C7F1BC90AC70090709B /* LTSegmentedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedViewController.h; sourceTree = "<group>"; };
 		9C775C801BC90AC70090709B /* LTSegmentedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSegmentedViewController.m; sourceTree = "<group>"; };
 		9C775C821BC90DF40090709B /* LTSegmentedViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedViewProtocol.h; sourceTree = "<group>"; };
+		9CF353FC1BD8D2C30022C7E7 /* fengxian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fengxian@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		3474B8DF1BA5AD4100A5C391 = {
 			isa = PBXGroup;
 			children = (
+				9CF353FC1BD8D2C30022C7E7 /* fengxian@2x.png */,
 				9C1853B71BCB9A9F008C8152 /* OAStackView */,
 				3474B8EA1BA5AD4100A5C391 /* LTSegmentedViewController */,
 				3474B9041BA5AD4200A5C391 /* LTSegmentedViewControllerTests */,
@@ -299,6 +302,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CF353FD1BD8D2C30022C7E7 /* fengxian@2x.png in Resources */,
 				3474B8F71BA5AD4100A5C391 /* Main.storyboard in Resources */,
 				3474B8FC1BA5AD4100A5C391 /* LaunchScreen.xib in Resources */,
 				3474B8F91BA5AD4100A5C391 /* Images.xcassets in Resources */,

@@ -55,21 +55,21 @@ static const CGFloat LTUnderLineSegmentedViewUnderLineDefaultHeight = 2.f;
     
     [super segmentedView:segmentedView didSelectedItemAtIndex:index];
 
-    self.underLineLedingConstraint.constant = ((CGRectGetWidth(self.contentView.frame) / self.items.count) * self.selectedIndex);
+    self.underLineLedingConstraint.constant = ((self.contentView.contentSize.width / self.items.count) * self.selectedIndex);
 }
 
 - (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView willScrollToItemAtIndex:(NSInteger) index percent:(CGFloat) percent{
     
     [super segmentedView:segmentedView willScrollToItemAtIndex:index percent:percent];
   
+    CGFloat width = (self.contentView.contentSize.width / self.items.count);
     if (index != self.selectedIndex && index >= 0 && index < self.items.count) {
         
         NSInteger frontIndex = MAX(MIN(index, self.selectedIndex), 0);
-        CGFloat width = (CGRectGetWidth(self.contentView.frame) / self.items.count);
         self.underLineLedingConstraint.constant = (width * frontIndex) + width * percent;
     }else{
         
-        self.underLineLedingConstraint.constant = ((CGRectGetWidth(self.contentView.frame) / self.items.count) * self.selectedIndex);
+        self.underLineLedingConstraint.constant = (width * self.selectedIndex);
     }
 }
 

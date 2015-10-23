@@ -98,34 +98,30 @@
     if (!_segmentedView) {
         
         __weak typeof(self) weakSelf = self;
-        LTSegmentedItem *item1 = [[LTSegmentedItem alloc] initWithTitle:self.firstViewController.title action:^(LTSegmentedItem *item) {
+        LTSegmentedItem *item1 = [[LTSegmentedItem alloc] initWithTitle:self.firstViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
             NSLog(@"%@", item.titleLabel.text);
             [weakSelf.segmentedViewController jumpToPage:0];
         }];
-        LTSegmentedItem *item2 = [[LTSegmentedItem alloc] initWithTitle:self.secondViewController.title action:^(LTSegmentedItem *item) {
+        
+        LTSegmentedItem *item2 = [[LTSegmentedItem alloc] initWithTitle:self.secondViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
             NSLog(@"%@", item.titleLabel.text);
             [weakSelf.segmentedViewController jumpToPage:1];
         }];
-        [item2.titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh + 10 forAxis:UILayoutConstraintAxisHorizontal];
         
-        LTSegmentedItem *item3 = [[LTSegmentedItem alloc] initWithTitle:self.thirdViewController.title action:^(LTSegmentedItem *item) {
+        LTSegmentedItem *item3 = [[LTSegmentedItem alloc] initWithTitle:self.thirdViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
             NSLog(@"%@", item.titleLabel.text);
             [weakSelf.segmentedViewController jumpToPage:2];
         }];
-        [item3.titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh + 11 forAxis:UILayoutConstraintAxisHorizontal];
         
-        LTSegmentedItem *item4 = [[LTSegmentedItem alloc] initWithTitle:self.fourthViewController.title action:^(LTSegmentedItem *item) {
+        LTSegmentedItem *item4 = [[LTSegmentedItem alloc] initWithTitle:self.fourthViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
             NSLog(@"%@", item.titleLabel.text);
             [weakSelf.segmentedViewController jumpToPage:3];
         }];
-        [item4.titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh + 12 forAxis:UILayoutConstraintAxisHorizontal];
         
-        LTSegmentedItem *item5 = [[LTSegmentedItem alloc] initWithTitle:self.fifthViewController.title action:^(LTSegmentedItem *item) {
+        LTSegmentedItem *item5 = [[LTSegmentedItem alloc] initWithTitle:self.fifthViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
             NSLog(@"%@", item.titleLabel.text);
             [weakSelf.segmentedViewController jumpToPage:4];
         }];
-        [item5.titleLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh + 13 forAxis:UILayoutConstraintAxisHorizontal];
-        
         
         LTSegmentedView *segmentedView = [[NSClassFromString(self.segmentViewClassName) alloc] initWithItems:@[ item1, item2, item3, item4, item5]];
         segmentedView.contentView.backgroundColor = [UIColor redColor];
