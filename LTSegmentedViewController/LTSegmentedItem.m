@@ -8,8 +8,15 @@
 
 #import "LTSegmentedItem.h"
 #import "NSLayoutConstraint+ActiveConstraint.h"
+#import "LTSegmentedViewItemProtocol.h"
 
-@interface LTSegmentedItem()<UIGestureRecognizerDelegate>
+#pragma mark -Constant Define
+static const CGFloat LTSegmentedItemDefaultTitleNormalFontSize = 10;
+static const CGFloat LTSegmentedItemDefaultTitleSelectedFontSize = 25;
+static const struct LTColor LTSegmentedItemDefaultTitleNormalColor = {0xFF, 0xFF, 0xFF, 1};
+static const struct LTColor LTSegmentedItemDefaultTitleSelectedColor = {0x33, 0x33, 0x33, 1};
+
+@interface LTSegmentedItem()<UIGestureRecognizerDelegate, LTSegmentedViewItemProtocol>
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @end
@@ -20,6 +27,11 @@
     
     self = [super initWithFrame:CGRectZero];
     if (self) {
+        
+        _titleNormalColor = LTSegmentedItemDefaultTitleNormalColor;
+        _titleNormalFontSize = LTSegmentedItemDefaultTitleNormalFontSize;
+        _titleSelectedColor = LTSegmentedItemDefaultTitleSelectedColor;
+        _titleSelectedFontSize = LTSegmentedItemDefaultTitleSelectedFontSize;
         
         _contentView = ({
             
@@ -37,21 +49,13 @@
             label.translatesAutoresizingMaskIntoConstraints = NO;
             label.textAlignment = NSTextAlignmentCenter;
             label.text = title;
+            label.textColor = LTColorToUIColor(_titleNormalColor);
+            label.font = [UIFont systemFontOfSize:_titleNormalFontSize];
             [label setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh + 1 forAxis:UILayoutConstraintAxisHorizontal];
             [_contentView addSubview:label];
             
             label;
         });
-        
-//        _imageView = ({
-//        
-//            UIImageView *imageView = [[UIImageView alloc] initWithImage:icon];
-//            imageView.translatesAutoresizingMaskIntoConstraints = NO;
-//            imageView.contentMode = UIViewContentModeRight;
-//            [_contentView addSubview:imageView];
-//            
-//            imageView;
-//        });
         
         NSArray *v_ContentView_Constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_contentView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentView)];
         NSArray *h_ContentView_Constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_contentView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentView)];
@@ -83,7 +87,7 @@
 
 - (CGSize) intrinsicContentSize{
     
-    return CGSizeMake(self.titleLabel.intrinsicContentSize.width + self.imageView.intrinsicContentSize.width + self.contentOffset.horizontal, MAX(self.imageView.intrinsicContentSize.height, self.titleLabel.intrinsicContentSize.height) + self.contentOffset.vertical);
+    return CGSizeMake(self.titleLabel.intrinsicContentSize.width + self.contentOffset.horizontal, self.titleLabel.intrinsicContentSize.height + self.contentOffset.vertical);
 }
 
 #pragma mark -User Interaction
@@ -95,6 +99,32 @@
     }
 }
 
+#pragma mark -Protocol
+#pragma mark 
+- (void) willSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent{
+    
+    self.titleLabel.font = [UIFont systemFontOfSize:((self.titleSelectedFontSize - self.titleNormalFontSize) * percent) + self.titleNormalFontSize];
+    self.titleLabel.textColor = LTColorToUIColor(LTGradualColor(self.titleNormalColor, self.titleSelectedColor, percent));
+}
+
+- (void) didSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item{
+    
+    self.titleLabel.textColor = LTColorToUIColor(self.titleSelectedColor);
+    self.titleLabel.font = [UIFont systemFontOfSize:self.titleSelectedFontSize];
+}
+
+- (void) willDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent{
+    
+    self.titleLabel.font = [UIFont systemFontOfSize:((self.titleSelectedFontSize - self.titleNormalFontSize) * percent) + self.titleNormalFontSize];
+    self.titleLabel.textColor = LTColorToUIColor(LTGradualColor(self.titleNormalColor, self.titleSelectedColor, percent));
+}
+
+- (void) didDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item{
+    
+    self.titleLabel.textColor = LTColorToUIColor(self.titleNormalColor);
+    self.titleLabel.font = [UIFont systemFontOfSize:self.titleNormalFontSize];
+}
+
 #pragma mark -Accessor
 - (void) setContentOffset:(UIOffset)contentOffset{
     
@@ -104,4 +134,5 @@
         [self invalidateIntrinsicContentSize];
     }
 }
+
 @end

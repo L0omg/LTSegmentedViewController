@@ -7,13 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LTDataDefine.h"
 
 @interface LTSegmentedItem : UIControl
 @property (nonatomic, strong, readonly) UIView *contentView;
 @property (nonatomic, strong, readonly) UILabel *titleLabel;
-@property (nonatomic, strong, readonly) UIImageView *imageView;
 @property (nonatomic, assign) UIOffset contentOffset;
 @property (nonatomic, copy) void((^clickAction)(LTSegmentedItem* item));
+
+@property (nonatomic, assign) CGFloat titleNormalFontSize;
+@property (nonatomic, assign) CGFloat titleSelectedFontSize;
+@property (nonatomic, assign) LTColor titleNormalColor;
+@property (nonatomic, assign) LTColor titleSelectedColor;
 
 - (instancetype) initWithTitle:(NSString*) title icon:(UIImage*) icon action:(void(^)(LTSegmentedItem* item)) action;
 - (instancetype) initWithTitle:(NSString*) title icon:(UIImage*) icon;

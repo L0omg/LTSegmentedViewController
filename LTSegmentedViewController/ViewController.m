@@ -7,8 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "LTSegmentedItem.h"
 #import "LTUnderLineSegmentedView.h"
-#import "LTWYSegmentedView.h"
 #import "LTCoverSegmentedView.h"
 #import "NSLayoutConstraint+ActiveConstraint.h"
 #import "ContentViewController.h"

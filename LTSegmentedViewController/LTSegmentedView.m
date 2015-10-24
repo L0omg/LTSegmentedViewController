@@ -10,12 +10,13 @@
 #import "NSLayoutConstraint+ActiveConstraint.h"
 #import "LTSegmentedView+private.h"
 #import "OAStackView.h"
+#import "LTSegmentedViewItemProtocol.h"
 
 static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
 
 @interface LTSegmentedView ()
 @property (nonatomic, strong) OAStackView *containerView;
-@property (nonatomic, copy) NSMutableArray<__kindof LTSegmentedItem*> *p_mItems;
+@property (nonatomic, copy) NSMutableArray/*<__kindof UIView*>*/ *p_mItems;
 
 @property (nonatomic, strong) NSLayoutConstraint *contentWidthConstraint;
 @end
@@ -24,7 +25,7 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
 @synthesize selectedIndex = _selectedIndex;
 
 #pragma mark -LifeCycle
-- (instancetype) initWithItems:(NSArray<__kindof LTSegmentedItem*>*) items{
+- (instancetype) initWithItems:(NSArray/*<__kindof UIView*>*/*) items{
     
     self = [super initWithFrame:CGRectZero];
     if (self) {
@@ -88,7 +89,7 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
     self.selectedIndex = self.selectedIndex;/*调整contentOffset*/
 }
 
-- (void) addItem:(LTSegmentedItem*) item{
+- (void) addItem:(UIView*) item{
     
     [self.containerView addArrangedSubview:item];
     [self.p_mItems addObject:item];
@@ -99,19 +100,19 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
     
     if ([self isValidIndex:index]) {
         
-        LTSegmentedItem *item = self.items[index];
+        UIView *item = self.items[index];
         [self removeItem:item];
     }
 }
 
-- (void) removeItem:(LTSegmentedItem*) item{
+- (void) removeItem:(UIView*) item{
     
     [self.containerView removeArrangedSubview:item];
     [self.p_mItems removeObject:item];
     [self reloadItems];
 }
 
-- (void) insertItem:(LTSegmentedItem*) item atIndex:(NSInteger) index{
+- (void) insertItem:(UIView*) item atIndex:(NSInteger) index{
     
     [self.containerView insertArrangedSubview:item atIndex:index];
     [self.p_mItems insertObject:item atIndex:index];
@@ -132,21 +133,7 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
         
         [self.contentWidthConstraint fm_ActiveToView:self.contentView];
     }
-}
-
-#pragma mark -Protocol
-#pragma mark LTSegmentedViewProtocol <NSObject>
-- (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView didSelectedItemAtIndex:(NSInteger) index{
-
-    if (index != NSNotFound) {
-        
-        self.selectedIndex = index;
-    }
-}
-
-- (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView willScrollToItemAtIndex:(NSInteger) index percent:(CGFloat) percent{
-    
-    
+    [self.contentView layoutIfNeeded];
 }
 
 - (void) adjustContentOffsetFrom:(NSInteger) preIndex to:(NSInteger) curIndex{
@@ -194,8 +181,85 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
     }
 }
 
+- (void) notifyItemSelectIndexWillChangeFrom:(NSInteger) preIndex to:(NSInteger) curIndex percent:(CGFloat) percent{
+    
+    if ((![self isValidIndex:curIndex]) || (preIndex == curIndex)) {
+        
+        return;
+    }
+    
+    UIView *preItem = [self itemOfIndex:preIndex];
+    UIView *curItem = [self itemOfIndex:curIndex];
+    if (preItem && [preItem respondsToSelector:@selector(willDeselectItem:percent:)]) {
+        
+        NSMethodSignature *method = [[preItem class] instanceMethodSignatureForSelector:@selector(willDeselectItem:percent:)];
+        NSInvocation *invovation = [NSInvocation invocationWithMethodSignature:method];
+        invovation.selector = @selector(willDeselectItem:percent:);
+        invovation.target = preItem;
+        [invovation setArgument:(__bridge void *)(preItem) atIndex:2];
+        CGFloat actualPercent = (preIndex > curIndex ? percent : (1 - percent));
+        [invovation setArgument:(&actualPercent) atIndex:3];
+        [invovation invoke];
+    }
+    
+    if (curItem && [curItem respondsToSelector:@selector(willSelectItem:percent:)]) {
+        
+        NSMethodSignature *method = [[curItem class] instanceMethodSignatureForSelector:@selector(willSelectItem:percent:)];
+        NSInvocation *invovation = [NSInvocation invocationWithMethodSignature:method];
+        invovation.selector = @selector(willSelectItem:percent:);
+        invovation.target = curItem;
+        [invovation setArgument:(__bridge void *)(curItem) atIndex:2];
+        CGFloat actualPercent = (preIndex < curIndex ? percent : (1 - percent));
+        [invovation setArgument:(&actualPercent) atIndex:3];
+        [invovation invoke];
+    }
+}
+
+- (void) notifyItemSelectIndexDidChangedFrom:(NSInteger) preIndex to:(NSInteger) curIndex{
+    
+    UIView *preItem = [self itemOfIndex:preIndex];
+    UIView *curItem = [self itemOfIndex:curIndex];
+    if (preItem && [preItem respondsToSelector:@selector(didDeselectItem:)]) {
+        
+        NSMethodSignature *method = [[preItem class] instanceMethodSignatureForSelector:@selector(didDeselectItem:)];
+        NSInvocation *invovation = [NSInvocation invocationWithMethodSignature:method];
+        invovation.selector = @selector(didDeselectItem:);
+        invovation.target = preItem;
+        [invovation setArgument:(__bridge void *)(preItem) atIndex:2];
+        [invovation invoke];
+    }
+    
+    if (curItem && [curItem respondsToSelector:@selector(didSelectItem:)]) {
+        
+        NSMethodSignature *method = [[curItem class] instanceMethodSignatureForSelector:@selector(didSelectItem:)];
+        NSInvocation *invovation = [NSInvocation invocationWithMethodSignature:method];
+        invovation.selector = @selector(didSelectItem:);
+        invovation.target = curItem;
+        [invovation setArgument:(__bridge void *)(curItem) atIndex:2];
+        [invovation invoke];
+    }
+}
+
+#pragma mark -Protocol
+#pragma mark LTSegmentedViewProtocol <NSObject>
+- (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView didSelectedItemAtIndex:(NSInteger) index{
+
+    if (index != NSNotFound) {
+        
+        self.selectedIndex = index;
+    }
+}
+
+- (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView willScrollToItemAtIndex:(NSInteger) index percent:(CGFloat) percent{
+    
+    if (index != self.selectedIndex) {
+        
+        [self notifyItemSelectIndexWillChangeFrom:self.selectedIndex to:index percent:percent];
+    }
+}
+
 #pragma mark -Accessor
-- (NSArray<__kindof LTSegmentedItem*>*) items{
+- (NSArray/*<__kindof UIView*>*/*) items{
     
     return [self.p_mItems copy];
 }
@@ -208,6 +272,7 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
     _selectedIndex = selectedIndex;
     
     [self adjustContentOffsetFrom:preIndex to:selectedIndex];
+    [self notifyItemSelectIndexDidChangedFrom:preIndex to:selectedIndex];
 }
 
 - (NSInteger) selectedIndex{

@@ -25,7 +25,7 @@
 
 @implementation LTCoverSegmentedView
 #pragma mark -Life Cycle
-- (instancetype) initWithItems:(NSArray<__kindof LTSegmentedItem *> *)items{
+- (instancetype) initWithItems:(NSArray/*<__kindof LTSegmentedItem *>*/ *)items{
     
     self = [super initWithItems:items];
     if (self) {
@@ -81,7 +81,7 @@
     [super segmentedView:segmentedView willScrollToItemAtIndex:index percent:percent];
 
     CGFloat itemWidth = self.itemWidth;
-    if (index != self.selectedIndex && index >= 0 && index < self.items.count) {
+    if (index != self.selectedIndex && [self isValidIndex:index]) {
         
         NSInteger frontIndex = [self frontIndex:index another:self.selectedIndex];
         self.coverViewCenterXConstraint.constant = (itemWidth * (frontIndex + 0.5f)) + itemWidth * percent;

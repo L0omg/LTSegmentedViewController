@@ -7,17 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LTSegmentedItem.h"
 #import "LTSegmentedViewProtocol.h"
 @interface LTSegmentedView : UIView<LTSegmentedViewProtocol>
-@property (nonatomic, copy) NSArray<__kindof LTSegmentedItem*> *items;
+@property (nonatomic, copy) NSArray/*<__kindof UIView*>*/ *items;
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, strong) UIScrollView *contentView;
 @property (nonatomic, assign) NSInteger numberOfItemsPerScreen;//default 4
 
-- (instancetype) initWithItems:(NSArray<__kindof LTSegmentedItem*>*) items;
+- (instancetype) initWithItems:(NSArray/*<__kindof UIView *>*/*) items;
 - (void) reloadItems;
-- (void) addItem:(LTSegmentedItem*) item;
+- (void) addItem:(UIView*) item;
 - (void) removeItemAtIndex:(NSInteger) index;
-- (void) insertItem:(LTSegmentedItem*) item atIndex:(NSInteger) index;
+- (void) insertItem:(UIView*) item atIndex:(NSInteger) index;
 @end

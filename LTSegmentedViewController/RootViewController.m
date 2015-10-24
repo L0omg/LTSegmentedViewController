@@ -9,7 +9,6 @@
 #import "RootViewController.h"
 #import "NSLayoutConstraint+ActiveConstraint.h"
 #import "ViewController.h"
-#import "LTWYSegmentedView.h"
 #import "LTUnderLineSegmentedView.h"
 #import "LTCoverSegmentedView.h"
 @interface RootViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -83,7 +82,7 @@
         case 0:
         {
             viewController.title = @"网易风格";
-            viewController.segmentViewClassName = NSStringFromClass([LTWYSegmentedView class]);
+            viewController.segmentViewClassName = NSStringFromClass([LTSegmentedView class]);
         }
             break;
         case 1:
@@ -102,6 +101,10 @@
             break;
     }
     [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
 }
 
 #pragma mark -Accessor 

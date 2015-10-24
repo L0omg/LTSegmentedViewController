@@ -9,11 +9,21 @@
 #import "LTSegmentedView+private.h"
 
 @implementation LTSegmentedView (private)
-- (LTSegmentedItem*) selectedItem{
+- (UIView*) selectedItem{
     
     if ([self isValidIndex:self.selectedIndex]) {
         
         return self.items[self.selectedIndex];
+    }
+    
+    return nil;
+}
+
+- (UIView*) itemOfIndex:(NSInteger) index{
+    
+    if ([self isValidIndex:index]) {
+        
+        return self.items[index];
     }
     
     return nil;
@@ -71,6 +81,17 @@
     }
     
     return [self validIndexAt:frontIndex];
+}
+
+- (NSInteger) backIndex:(NSInteger) theIndex another:(NSInteger) otherIndex{
+    
+    NSInteger backIndex = theIndex;
+    if (backIndex < otherIndex) {
+        
+        backIndex = otherIndex;
+    }
+    
+    return [self validIndexAt:backIndex];
 }
 
 - (CGFloat) minimunOffset{

@@ -24,7 +24,7 @@ static const CGFloat LTUnderLineSegmentedViewUnderLineDefaultHeight = 2.f;
 
 @implementation LTUnderLineSegmentedView
 #pragma mark -Life Cycle
-- (instancetype) initWithItems:(NSArray<__kindof LTSegmentedItem *> *)items{
+- (instancetype) initWithItems:(NSArray/*<__kindof UIView *>*/ *)items{
     
     self = [super initWithItems:items];
     if (self) {
@@ -80,7 +80,7 @@ static const CGFloat LTUnderLineSegmentedViewUnderLineDefaultHeight = 2.f;
     [super segmentedView:segmentedView willScrollToItemAtIndex:index percent:percent];
   
     CGFloat itemWidth = self.itemWidth;
-    if (index != self.selectedIndex && index >= 0 && index < self.items.count) {
+    if (index != self.selectedIndex && [self isValidIndex:index]) {
         
         NSInteger frontIndex = [self frontIndex:index another:self.selectedIndex];
         self.underLineLeadingConstraint.constant = (itemWidth * frontIndex) + itemWidth * percent;

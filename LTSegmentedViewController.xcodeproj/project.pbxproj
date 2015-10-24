@@ -16,7 +16,6 @@
 		3474B8FC1BA5AD4100A5C391 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3474B8FA1BA5AD4100A5C391 /* LaunchScreen.xib */; };
 		3474B9081BA5AD4200A5C391 /* LTSegmentedViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3474B9071BA5AD4200A5C391 /* LTSegmentedViewControllerTests.m */; };
 		34D1E8611BA85E4C002A3A5B /* LTSegmentedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D1E8601BA85E4C002A3A5B /* LTSegmentedItem.m */; };
-		34DF76C11BC9F8CC003C921E /* LTWYSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DF76C01BC9F8CC003C921E /* LTWYSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
 		34DF76C51BCA3178003C921E /* LTUnderLineSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DF76C41BCA3178003C921E /* LTUnderLineSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
 		34DF76C81BCA4073003C921E /* LTCoverSegmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DF76C71BCA4073003C921E /* LTCoverSegmentedView.m */; settings = {ASSET_TAGS = (); }; };
 		34EBBCB31BDA71350073458A /* LTSegmentedView+private.m in Sources */ = {isa = PBXBuildFile; fileRef = 34EBBCB21BDA71350073458A /* LTSegmentedView+private.m */; settings = {ASSET_TAGS = (); }; };
@@ -42,6 +41,7 @@
 /* Begin PBXFileReference section */
 		3421AD731BC259B40013EDE3 /* ContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentViewController.h; sourceTree = "<group>"; };
 		3421AD741BC259B40013EDE3 /* ContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentViewController.m; sourceTree = "<group>"; };
+		3463E8671BDAFE8B00CF0FF5 /* LTSegmentedViewItemProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedViewItemProtocol.h; sourceTree = "<group>"; };
 		3474B8E81BA5AD4100A5C391 /* LTSegmentedViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LTSegmentedViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3474B8EC1BA5AD4100A5C391 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3474B8ED1BA5AD4100A5C391 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -57,8 +57,6 @@
 		3474B9071BA5AD4200A5C391 /* LTSegmentedViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTSegmentedViewControllerTests.m; sourceTree = "<group>"; };
 		34D1E85F1BA85E4C002A3A5B /* LTSegmentedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSegmentedItem.h; sourceTree = "<group>"; };
 		34D1E8601BA85E4C002A3A5B /* LTSegmentedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSegmentedItem.m; sourceTree = "<group>"; };
-		34DF76BF1BC9F8CC003C921E /* LTWYSegmentedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWYSegmentedView.h; sourceTree = "<group>"; };
-		34DF76C01BC9F8CC003C921E /* LTWYSegmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWYSegmentedView.m; sourceTree = "<group>"; };
 		34DF76C21BC9FC30003C921E /* LTDataDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTDataDefine.h; sourceTree = "<group>"; };
 		34DF76C31BCA3178003C921E /* LTUnderLineSegmentedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTUnderLineSegmentedView.h; sourceTree = "<group>"; };
 		34DF76C41BCA3178003C921E /* LTUnderLineSegmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTUnderLineSegmentedView.m; sourceTree = "<group>"; };
@@ -176,10 +174,9 @@
 				34D1E8601BA85E4C002A3A5B /* LTSegmentedItem.m */,
 				34EBBCB11BDA71350073458A /* LTSegmentedView+private.h */,
 				34EBBCB21BDA71350073458A /* LTSegmentedView+private.m */,
+				3463E8671BDAFE8B00CF0FF5 /* LTSegmentedViewItemProtocol.h */,
 				34F0D2A71BAD7710002685C7 /* LTSegmentedView.h */,
 				34F0D2A81BAD7710002685C7 /* LTSegmentedView.m */,
-				34DF76BF1BC9F8CC003C921E /* LTWYSegmentedView.h */,
-				34DF76C01BC9F8CC003C921E /* LTWYSegmentedView.m */,
 				34DF76C31BCA3178003C921E /* LTUnderLineSegmentedView.h */,
 				34DF76C41BCA3178003C921E /* LTUnderLineSegmentedView.m */,
 				34DF76C61BCA4073003C921E /* LTCoverSegmentedView.h */,
@@ -340,7 +337,6 @@
 				34DF76C51BCA3178003C921E /* LTUnderLineSegmentedView.m in Sources */,
 				9C1853B61BCB9175008C8152 /* RootViewController.m in Sources */,
 				3474B8EE1BA5AD4100A5C391 /* main.m in Sources */,
-				34DF76C11BC9F8CC003C921E /* LTWYSegmentedView.m in Sources */,
 				34EBBCB31BDA71350073458A /* LTSegmentedView+private.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
