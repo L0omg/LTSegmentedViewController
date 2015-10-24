@@ -12,6 +12,7 @@
 @property (nonatomic, copy) NSArray/*<__kindof UIView*>*/ *items;
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, strong) UIScrollView *contentView;
+@property (nonatomic, strong) UIView *seperateLineView;
 @property (nonatomic, assign) NSInteger numberOfItemsPerScreen;//default 4
 
 - (instancetype) initWithItems:(NSArray/*<__kindof UIView *>*/*) items;

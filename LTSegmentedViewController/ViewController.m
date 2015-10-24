@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "LTSegmentedItem.h"
+#import "XIBItem.h"
 #import "LTUnderLineSegmentedView.h"
 #import "LTCoverSegmentedView.h"
 #import "NSLayoutConstraint+ActiveConstraint.h"
@@ -132,58 +133,40 @@
     if (!_segmentedView) {
         
         __weak typeof(self) weakSelf = self;
-        LTSegmentedItem *item1 = [[LTSegmentedItem alloc] initWithTitle:self.firstViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
-            NSLog(@"%@", item.titleLabel.text);
-            [weakSelf.segmentedViewController jumpToPage:0];
-        }];
+        NSMutableArray *items = [NSMutableArray arrayWithCapacity:0];
+        if ([self.segmentItemClassName isEqualToString:NSStringFromClass([XIBItem class])]){
+            
+            NSArray *titles = @[@"花样滑冰" ,@"棒球", @"保龄球", @"冰壶", @"网球", @"滑冰", @"电子竞技", @"橄榄球", @"高尔夫球", @"滑板车"];
+            for (NSUInteger i = 0; i < 10; i ++) {
+                
+                UIImage *normalImage = [UIImage imageNamed:[NSString stringWithFormat:@"%ld_gray", (long)i]];
+                UIImage *selectedImage = [UIImage imageNamed:[NSString stringWithFormat:@"%ld_green", (long)i]];
+                UIColor *normalColor = UIColorFromRGBHex(0xAAAAAA);
+                UIColor *selectedColor = [UIColor greenColor];
+                
+                XIBItem *item = [XIBItem itemWithImage:normalImage title:titles[i]];
+                [item setImage:normalImage state:XIBItemStateNormal];
+                [item setImage:selectedImage state:XIBItemStateSelected];
+                [item setTextColor:normalColor state:XIBItemStateNormal];
+                [item setTextColor:selectedColor state:XIBItemStateSelected];
+                [items addObject:item];
+            }
+        }else{
+            
+            for (NSUInteger i = 0; i < 10; i++) {
+                
+                LTSegmentedItem *item = [[LTSegmentedItem alloc] initWithTitle:[self.viewControllers[i] title] icon:nil action:^(LTSegmentedItem *item) {
+                    
+                    [weakSelf.segmentedViewController jumpToPage:i];
+                }];
+                
+                [items addObject:item];
+            }
+        }
         
-        LTSegmentedItem *item2 = [[LTSegmentedItem alloc] initWithTitle:self.secondViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
-            NSLog(@"%@", item.titleLabel.text);
-            [weakSelf.segmentedViewController jumpToPage:1];
-        }];
-        
-        LTSegmentedItem *item3 = [[LTSegmentedItem alloc] initWithTitle:self.thirdViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
-            NSLog(@"%@", item.titleLabel.text);
-            [weakSelf.segmentedViewController jumpToPage:2];
-        }];
-        
-        LTSegmentedItem *item4 = [[LTSegmentedItem alloc] initWithTitle:self.fourthViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
-            NSLog(@"%@", item.titleLabel.text);
-            [weakSelf.segmentedViewController jumpToPage:3];
-        }];
-        
-        LTSegmentedItem *item5 = [[LTSegmentedItem alloc] initWithTitle:self.fifthViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
-            NSLog(@"%@", item.titleLabel.text);
-            [weakSelf.segmentedViewController jumpToPage:4];
-        }];
-        
-        LTSegmentedItem *item6 = [[LTSegmentedItem alloc] initWithTitle:self.sixthViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
-            NSLog(@"%@", item.titleLabel.text);
-            [weakSelf.segmentedViewController jumpToPage:5];
-        }];
-        
-        LTSegmentedItem *item7 = [[LTSegmentedItem alloc] initWithTitle:self.seventhViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
-            NSLog(@"%@", item.titleLabel.text);
-            [weakSelf.segmentedViewController jumpToPage:6];
-        }];
-        
-        LTSegmentedItem *item8 = [[LTSegmentedItem alloc] initWithTitle:self.eighthViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
-            NSLog(@"%@", item.titleLabel.text);
-            [weakSelf.segmentedViewController jumpToPage:7];
-        }];
-        
-        LTSegmentedItem *item9 = [[LTSegmentedItem alloc] initWithTitle:self.ninthViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
-            NSLog(@"%@", item.titleLabel.text);
-            [weakSelf.segmentedViewController jumpToPage:8];
-        }];
-        
-        LTSegmentedItem *item10 = [[LTSegmentedItem alloc] initWithTitle:self.tenthViewController.title icon:[UIImage imageNamed:@"fengxian"] action:^(LTSegmentedItem *item) {
-            NSLog(@"%@", item.titleLabel.text);
-            [weakSelf.segmentedViewController jumpToPage:9];
-        }];
-        
-        LTSegmentedView *segmentedView = [[NSClassFromString(self.segmentViewClassName) alloc] initWithItems:@[ item1, item2, item3, item4, item5, item6, item7, item8, item9, item10]];
-        segmentedView.contentView.backgroundColor = [UIColor redColor];
+        LTSegmentedView *segmentedView = [[NSClassFromString(self.segmentViewClassName) alloc] initWithItems:items];
+        segmentedView.contentView.backgroundColor = [UIColor whiteColor];
+        segmentedView.seperateLineView.backgroundColor = UIColorFromRGBHex(0xDEDEDE);
         _segmentedView = segmentedView;
     }
     

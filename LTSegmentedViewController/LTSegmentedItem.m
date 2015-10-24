@@ -13,7 +13,7 @@
 #pragma mark -Constant Define
 static const CGFloat LTSegmentedItemDefaultTitleNormalFontSize = 10;
 static const CGFloat LTSegmentedItemDefaultTitleSelectedFontSize = 25;
-static const struct LTColor LTSegmentedItemDefaultTitleNormalColor = {0xFF, 0xFF, 0xFF, 1};
+static const struct LTColor LTSegmentedItemDefaultTitleNormalColor = {0x00, 0x00, 0xFF, 1};
 static const struct LTColor LTSegmentedItemDefaultTitleSelectedColor = {0x33, 0x33, 0x33, 1};
 
 @interface LTSegmentedItem()<UIGestureRecognizerDelegate, LTSegmentedViewItemProtocol>

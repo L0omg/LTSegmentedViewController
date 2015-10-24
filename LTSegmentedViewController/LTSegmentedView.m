@@ -56,7 +56,15 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
             stackView;
         });
         
-        NSArray *v_ContentView_Constraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_contentView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentView)];
+        _seperateLineView = ({
+            
+            UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+            view.translatesAutoresizingMaskIntoConstraints = NO;
+            [self addSubview:view];
+            view;
+        });
+        
+        NSArray *v_ContentView_Constraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_contentView][_seperateLineView(1)]|" options:(NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing) metrics:nil views:NSDictionaryOfVariableBindings(_contentView, _seperateLineView)];
         NSArray *h_ContentView_Constraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_contentView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentView)];
         
         NSLayoutConstraint *leading_ContainerView_Constraint = [NSLayoutConstraint constraintWithItem:_containerView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0.f];

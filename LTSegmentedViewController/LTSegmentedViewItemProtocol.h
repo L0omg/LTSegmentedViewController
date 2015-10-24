@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol LTSegmentedViewItemProtocol <NSObject>
+@optional
 - (void) willSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent;
 - (void) didSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item;
 - (void) willDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent;

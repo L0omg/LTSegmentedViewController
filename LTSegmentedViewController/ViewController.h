@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 @interface ViewController : UIViewController
 @property (nonatomic, strong) NSString *segmentViewClassName;
+@property (nonatomic, strong) NSString *segmentItemClassName;
 @end
 

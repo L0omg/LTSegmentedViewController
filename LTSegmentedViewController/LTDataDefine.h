@@ -51,4 +51,11 @@ LTGradualColor(LTColor frontColor, LTColor backColor, CGFloat percent)
     return color;
 }
 
+LT_INLINE UIColor*
+UIColorFromRGBHex(NSInteger hexValue)
+{
+    UIColor *color = [UIColor colorWithRed:((hexValue & 0xFF0000 >> 16) / 255.f) green:((hexValue & 0xFF00 >> 8) / 255.f) blue:((hexValue & 0xFF) / 255.f) alpha:1.f];
+    return color;
+}
+
 #endif /* LTDataDefine_h */

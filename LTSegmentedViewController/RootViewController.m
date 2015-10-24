@@ -11,8 +11,11 @@
 #import "ViewController.h"
 #import "LTUnderLineSegmentedView.h"
 #import "LTCoverSegmentedView.h"
+#import "XIBItem.h"
+#import "LTSegmentedItem.h"
 @interface RootViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSString *segmentedItemClassName;
 @end
 
 @implementation RootViewController
@@ -22,6 +25,10 @@
     // Do any additional setup after loading the view.
     self.title = @"LTSegmentedViewController Demo";
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    self.segmentedItemClassName = NSStringFromClass([LTSegmentedItem class]);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:self.segmentedItemClassName style:UIBarButtonItemStyleDone target:self action:@selector(changeItemType:)];
+    
     [self makeLayout];
 }
 
@@ -34,6 +41,19 @@
     NSArray *h_Constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(tableView)];
     [NSLayoutConstraint fm_ActiveConstraints:v_Constraints toView:self.view];
     [NSLayoutConstraint fm_ActiveConstraints:h_Constraints toView:self.view];
+}
+
+- (void) changeItemType:(UIBarButtonItem*) item{
+    
+    if ([self.segmentedItemClassName isEqualToString:NSStringFromClass([LTSegmentedItem class])]) {
+        
+        self.segmentedItemClassName = NSStringFromClass([XIBItem class]);
+    }else{
+        
+        self.segmentedItemClassName = NSStringFromClass([LTSegmentedItem class]);
+    }
+    
+    item.title = self.segmentedItemClassName;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -78,11 +98,13 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     ViewController *viewController = [[ViewController alloc] init];
+    viewController.segmentItemClassName = self.segmentedItemClassName;
     switch (indexPath.row) {
         case 0:
         {
             viewController.title = @"网易风格";
             viewController.segmentViewClassName = NSStringFromClass([LTSegmentedView class]);
+            viewController.segmentItemClassName = NSStringFromClass([LTSegmentedItem class]);
         }
             break;
         case 1:

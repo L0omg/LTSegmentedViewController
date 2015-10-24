@@ -125,6 +125,7 @@
 - (void) layoutSubviews{
     
     [self setNeedsDisplay];
+    [super layoutSubviews];
 }
 
 - (void) drawRect:(CGRect)rect{
