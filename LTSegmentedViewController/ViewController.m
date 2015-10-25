@@ -120,9 +120,9 @@
         
         _segmentedViewController = [[LTSegmentedViewController alloc] initWithSegmentedView:self.segmentedView dataSource:self];
         _segmentedViewController.embedSegmentedView = YES;
-        [self willMoveToParentViewController:_segmentedViewController];
         [self addChildViewController:_segmentedViewController];
         [self.view addSubview:_segmentedViewController.view];
+        [self didMoveToParentViewController:_segmentedViewController];
     }
     
     return _segmentedViewController;
