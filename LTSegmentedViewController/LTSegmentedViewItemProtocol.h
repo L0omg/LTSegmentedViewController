@@ -11,8 +11,8 @@
 
 @protocol LTSegmentedViewItemProtocol <NSObject>
 @optional
-- (void) willSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent;
-- (void) didSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item;
-- (void) willDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent;
-- (void) didDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item;
+- (void) segmentedView:(UIView*) segmentedView willSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent;
+- (void) segmentedView:(UIView*) segmentedView didSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item;
+- (void) segmentedView:(UIView*) segmentedView willDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent;
+- (void) segmentedView:(UIView*) segmentedView didDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item;
 @end

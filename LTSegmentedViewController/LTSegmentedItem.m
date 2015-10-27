@@ -101,25 +101,25 @@ static const struct LTColor LTSegmentedItemDefaultTitleSelectedColor = {0x33, 0x
 
 #pragma mark -Protocol
 #pragma mark 
-- (void) willSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent{
+- (void) segmentedView:(UIView*) segmentedView willSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent{
     
     self.titleLabel.font = [UIFont systemFontOfSize:((self.titleSelectedFontSize - self.titleNormalFontSize) * percent) + self.titleNormalFontSize];
     self.titleLabel.textColor = LTColorToUIColor(LTGradualColor(self.titleNormalColor, self.titleSelectedColor, percent));
 }
 
-- (void) didSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item{
+- (void) segmentedView:(UIView*) segmentedView didSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item{
     
     self.titleLabel.textColor = LTColorToUIColor(self.titleSelectedColor);
     self.titleLabel.font = [UIFont systemFontOfSize:self.titleSelectedFontSize];
 }
 
-- (void) willDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent{
+- (void) segmentedView:(UIView*) segmentedView willDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent{
     
     self.titleLabel.font = [UIFont systemFontOfSize:((self.titleSelectedFontSize - self.titleNormalFontSize) * percent) + self.titleNormalFontSize];
     self.titleLabel.textColor = LTColorToUIColor(LTGradualColor(self.titleNormalColor, self.titleSelectedColor, percent));
 }
 
-- (void) didDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item{
+- (void) segmentedView:(UIView*) segmentedView didDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item{
     
     self.titleLabel.textColor = LTColorToUIColor(self.titleNormalColor);
     self.titleLabel.font = [UIFont systemFontOfSize:self.titleNormalFontSize];

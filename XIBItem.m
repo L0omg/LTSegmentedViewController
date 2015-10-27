@@ -63,23 +63,23 @@
     }
 }
 
-- (void) willSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent{
+- (void) segmentedView:(UIView*) segmentedView willSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent{
     
     
 }
 
-- (void) didSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item{
+- (void) segmentedView:(UIView*) segmentedView didSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item{
     
     self.textLabel.textColor = self.titleSelectedColor;
     self.iconImageView.image = self.selectedImage;
 }
 
-- (void) willDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent{
+- (void) segmentedView:(UIView*) segmentedView willDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent{
     
     
 }
 
-- (void) didDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item{
+- (void) segmentedView:(UIView*) segmentedView didDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item{
     
     self.textLabel.textColor = self.titleNormalColor;
     self.iconImageView.image = self.normalImage;

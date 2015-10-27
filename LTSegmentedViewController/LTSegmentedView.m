@@ -198,27 +198,29 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
     
     UIView *preItem = [self itemOfIndex:preIndex];
     UIView *curItem = [self itemOfIndex:curIndex];
-    if (preItem && [preItem respondsToSelector:@selector(willDeselectItem:percent:)]) {
+    if (preItem && [preItem respondsToSelector:@selector(segmentedView:willDeselectItem:percent:)]) {
         
-        NSMethodSignature *method = [[preItem class] instanceMethodSignatureForSelector:@selector(willDeselectItem:percent:)];
+        NSMethodSignature *method = [[preItem class] instanceMethodSignatureForSelector:@selector(segmentedView:willDeselectItem:percent:)];
         NSInvocation *invovation = [NSInvocation invocationWithMethodSignature:method];
-        invovation.selector = @selector(willDeselectItem:percent:);
+        invovation.selector = @selector(segmentedView:willDeselectItem:percent:);
         invovation.target = preItem;
-        [invovation setArgument:(__bridge void *)(preItem) atIndex:2];
+        [invovation setArgument:(__bridge void *)(self) atIndex:2];
+        [invovation setArgument:(__bridge void *)(preItem) atIndex:3];
         CGFloat actualPercent = (preIndex > curIndex ? percent : (1 - percent));
-        [invovation setArgument:(&actualPercent) atIndex:3];
+        [invovation setArgument:(&actualPercent) atIndex:4];
         [invovation invoke];
     }
     
-    if (curItem && [curItem respondsToSelector:@selector(willSelectItem:percent:)]) {
+    if (curItem && [curItem respondsToSelector:@selector(segmentedView:willSelectItem:percent:)]) {
         
-        NSMethodSignature *method = [[curItem class] instanceMethodSignatureForSelector:@selector(willSelectItem:percent:)];
+        NSMethodSignature *method = [[curItem class] instanceMethodSignatureForSelector:@selector(segmentedView:willSelectItem:percent:)];
         NSInvocation *invovation = [NSInvocation invocationWithMethodSignature:method];
-        invovation.selector = @selector(willSelectItem:percent:);
+        invovation.selector = @selector(segmentedView:willSelectItem:percent:);
         invovation.target = curItem;
-        [invovation setArgument:(__bridge void *)(curItem) atIndex:2];
+        [invovation setArgument:(__bridge void *)(self) atIndex:2];
+        [invovation setArgument:(__bridge void *)(curItem) atIndex:3];
         CGFloat actualPercent = (preIndex < curIndex ? percent : (1 - percent));
-        [invovation setArgument:(&actualPercent) atIndex:3];
+        [invovation setArgument:(&actualPercent) atIndex:4];
         [invovation invoke];
     }
 }
@@ -227,23 +229,25 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
     
     UIView *preItem = [self itemOfIndex:preIndex];
     UIView *curItem = [self itemOfIndex:curIndex];
-    if (preItem && [preItem respondsToSelector:@selector(didDeselectItem:)]) {
+    if (preItem && [preItem respondsToSelector:@selector(segmentedView:didDeselectItem:)]) {
         
-        NSMethodSignature *method = [[preItem class] instanceMethodSignatureForSelector:@selector(didDeselectItem:)];
+        NSMethodSignature *method = [[preItem class] instanceMethodSignatureForSelector:@selector(segmentedView:didDeselectItem:)];
         NSInvocation *invovation = [NSInvocation invocationWithMethodSignature:method];
-        invovation.selector = @selector(didDeselectItem:);
+        invovation.selector = @selector(segmentedView:didDeselectItem:);
         invovation.target = preItem;
-        [invovation setArgument:(__bridge void *)(preItem) atIndex:2];
+        [invovation setArgument:(__bridge void *)(self) atIndex:2];
+        [invovation setArgument:(__bridge void *)(preItem) atIndex:3];
         [invovation invoke];
     }
     
-    if (curItem && [curItem respondsToSelector:@selector(didSelectItem:)]) {
+    if (curItem && [curItem respondsToSelector:@selector(segmentedView:didSelectItem:)]) {
         
-        NSMethodSignature *method = [[curItem class] instanceMethodSignatureForSelector:@selector(didSelectItem:)];
+        NSMethodSignature *method = [[curItem class] instanceMethodSignatureForSelector:@selector(segmentedView:didSelectItem:)];
         NSInvocation *invovation = [NSInvocation invocationWithMethodSignature:method];
-        invovation.selector = @selector(didSelectItem:);
+        invovation.selector = @selector(segmentedView:didSelectItem:);
         invovation.target = curItem;
-        [invovation setArgument:(__bridge void *)(curItem) atIndex:2];
+        [invovation setArgument:(__bridge void *)(self) atIndex:2];
+        [invovation setArgument:(__bridge void *)(curItem) atIndex:3];
         [invovation invoke];
     }
 }
