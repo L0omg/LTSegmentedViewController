@@ -132,6 +132,11 @@ static const CGFloat LTSegmentedViewControllerSegmentedViewHeight = 44.f;
         NSInteger index = [self.dataSource segmentedViewController:self indexAtViewController:viewController];
         [self.segmentedView segmentedView:self.segmentedView didSelectedItemAtIndex:index];
     }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(segmentedViewController:didTransitionToViewController:)]) {
+        
+        [self.delegate segmentedViewController:self didTransitionToViewController:viewController];
+    }
     self.scrolling = NO;
 }
 

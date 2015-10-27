@@ -17,8 +17,16 @@
 
 @end
 
+@protocol LTSegmentedViewControllerDelegate <NSObject>
+
+@optional
+- (void) segmentedViewController:(LTSegmentedViewController*) segmentedViewController didTransitionToViewController:(UIViewController*) viewController;
+
+@end
+
 @interface LTSegmentedViewController : UIViewController
 @property (nonatomic, weak) id<LTSegmentedViewControllerDataSource> dataSource;
+@property (nonatomic, weak) id<LTSegmentedViewControllerDelegate> delegate;
 @property (nonatomic, assign) CGFloat segmentViewHeight;/**< default 44.f*/
 @property (nonatomic, assign, getter=isEmbedSegmentedView) BOOL embedSegmentedView;/**< 是否将segmentedView嵌入到LTSegmentedViewController.view中, default YES*/
 /**
