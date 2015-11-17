@@ -69,10 +69,20 @@ static NSString *const LTPageViewControllerContentScrollViewContentOffsetKVOKeyP
             if (scrollView.contentSize.width > scrollView.frame.size.width) {
                 
                 CGFloat sWidth = CGRectGetWidth(scrollView.frame);
-                if (ABS(scrollView.contentOffset.x - sWidth) > 0.000001) {
+                if (ABS(scrollView.contentOffset.x - sWidth) > (CGFLOAT_IS_DOUBLE ? DBL_EPSILON : FLT_EPSILON)) {
                     
                     NSInteger curIndex = [self.dataSource pageViewController:self indexAtViewController:self.currentViewController];
-                    CGFloat percent = fmodf(scrollView.contentOffset.x, sWidth) / sWidth;
+                    CGFloat percent = 0;
+                    if (scrollView.contentOffset.x >= sWidth * 2) {
+                        
+                        percent = 1;
+                    }else if(scrollView.contentOffset.x <= 0){
+                        
+                        percent = 0;
+                    }else{
+                        
+                        percent = fmodf(scrollView.contentOffset.x, sWidth) / sWidth;
+                    }
                     LTPageViewControllerScrollDirection direction = LTPageViewControllerScrollDirectionLeft;
                     if (scrollView.contentOffset.x > sWidth) {//由于UIPageViewController采用了重用机制，contentScrollView只会有3页
                         
