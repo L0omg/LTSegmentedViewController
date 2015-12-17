@@ -16,7 +16,6 @@ static const CGFloat LTSegmentedViewControllerSegmentedViewHeight = 44.f;
 @property (nonatomic, strong) LTPageViewController *pageViewController;
 @property (nonatomic, strong) UIView<LTSegmentedViewProtocol>* segmentedView;
 @property (nonatomic, strong) NSLayoutConstraint *segmentedViewHeightConstraint;
-@property (nonatomic, assign, getter=isScrolling) BOOL scrolling;
 @end
 
 @implementation LTSegmentedViewController
@@ -62,7 +61,7 @@ static const CGFloat LTSegmentedViewControllerSegmentedViewHeight = 44.f;
 }
 
 - (void) makeLayout{
-
+    
     UIView *segmentView = self.segmentedView;
     UIView *pageView = self.pageViewController.view;
     pageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -80,7 +79,7 @@ static const CGFloat LTSegmentedViewControllerSegmentedViewHeight = 44.f;
         dicView = NSDictionaryOfVariableBindings(segmentView, pageView);
     }else{
         
-       v_VFL = [NSString stringWithFormat:@"V:|%@", v_VFL];
+        v_VFL = [NSString stringWithFormat:@"V:|%@", v_VFL];
         dicView = NSDictionaryOfVariableBindings(pageView);
     }
     
@@ -121,31 +120,25 @@ static const CGFloat LTSegmentedViewControllerSegmentedViewHeight = 44.f;
     return 0;
 }
 #pragma mark LTPageViewControllerDelegate <NSObject>
-- (void) pageViewController:(LTPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers{
+- (void) pageViewController:(LTPageViewController *)pageViewController willTransitionToViewControllers:(NSArray/*<UIViewController *>*/ *)pendingViewControllers{
     
-    self.scrolling = YES;
 }
 
 - (void) pageViewController:(LTPageViewController*) pageViewController didTransitionToViewController:(UIViewController*) viewController{
     
+    NSInteger index = [self.dataSource segmentedViewController:self indexAtViewController:viewController];
+    
     if (self.segmentedView && [self.segmentedView respondsToSelector:@selector(segmentedView:didSelectedItemAtIndex:)]) {
-        NSInteger index = [self.dataSource segmentedViewController:self indexAtViewController:viewController];
+        
         [self.segmentedView segmentedView:self.segmentedView didSelectedItemAtIndex:index];
     }
-    
     if (self.delegate && [self.delegate respondsToSelector:@selector(segmentedViewController:didTransitionToViewController:)]) {
         
         [self.delegate segmentedViewController:self didTransitionToViewController:viewController];
     }
-    self.scrolling = NO;
 }
 
 - (void) pageViewController:(LTPageViewController*) pageViewController currentIndex:(NSInteger) currentIndex scrollDirection:(LTPageViewControllerScrollDirection) direction didScrollToPercent:(CGFloat)percent{
-    
-    if (!self.isScrolling) {
-        
-        return;
-    }
     
     if (self.segmentedView && [self.segmentedView respondsToSelector:@selector(segmentedView:willScrollToItemAtIndex:percent:)]) {
         

@@ -15,10 +15,11 @@
 @property (nonatomic, assign) UIOffset contentOffset;
 @property (nonatomic, copy) void((^clickAction)(LTSegmentedItem* item));
 
-@property (nonatomic, assign) CGFloat titleNormalFontSize;
-@property (nonatomic, assign) CGFloat titleSelectedFontSize;
 @property (nonatomic, assign) LTColor titleNormalColor;
 @property (nonatomic, assign) LTColor titleSelectedColor;
+
+@property (nonatomic, assign) CGFloat minimumScale;
+@property (nonatomic, assign) CGFloat maximumScale;
 
 - (instancetype) initWithTitle:(NSString*) title icon:(UIImage*) icon action:(void(^)(LTSegmentedItem* item)) action;
 - (instancetype) initWithTitle:(NSString*) title icon:(UIImage*) icon;

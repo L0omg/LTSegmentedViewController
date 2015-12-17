@@ -59,7 +59,7 @@ static NSString *const LTPageViewControllerContentScrollViewContentOffsetKVOKeyP
 }
 
 #pragma mark -KVO
-- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary/*<NSString *,id>*/ *)change context:(void *)context{
     
     if (context == LTPageViewControllerContentScrollViewContentOffsetKVOContext) {
         
@@ -75,10 +75,10 @@ static NSString *const LTPageViewControllerContentScrollViewContentOffsetKVOKeyP
                     CGFloat percent = 0;
                     if (scrollView.contentOffset.x >= sWidth * 2) {
                         
-                        percent = 1;
+                        return;
                     }else if(scrollView.contentOffset.x <= 0){
                         
-                        percent = 0;
+                        return;
                     }else{
                         
                         percent = fmodf(scrollView.contentOffset.x, sWidth) / sWidth;
@@ -102,7 +102,7 @@ static NSString *const LTPageViewControllerContentScrollViewContentOffsetKVOKeyP
 - (void) jumpToPage:(NSInteger) pageIndex{
     
     //获取滑动方向
-    NSInteger curIndex = [self.dataSource pageViewController:self indexAtViewController:[self.pageViewController.viewControllers firstObject]];
+    NSInteger curIndex = [self.dataSource pageViewController:self indexAtViewController:[self.pageViewController.viewControllers lastObject]];
     UIPageViewControllerNavigationDirection direction = UIPageViewControllerNavigationDirectionForward;
     if (curIndex > pageIndex) {
         
@@ -120,9 +120,6 @@ static NSString *const LTPageViewControllerContentScrollViewContentOffsetKVOKeyP
     if (viewController) {
         
         self.currentViewController = viewController;
-        //refer to:http://stackoverflow.com/questions/12939280/uipageviewcontroller-navigates-to-wrong-page-with-scroll-transition-style
-        //解决跳页UIPageViewController的bug
-        //
         [self.pageViewController setViewControllers:@[viewController] direction:direction animated:NO completion:nil];
         if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:didTransitionToViewController:)]) {
             
@@ -181,8 +178,8 @@ static NSString *const LTPageViewControllerContentScrollViewContentOffsetKVOKeyP
 }
 
 #pragma mark UIPageViewControllerDelegate
-- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers{
-        
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray/*<UIViewController *>*/ *)pendingViewControllers{
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:willTransitionToViewControllers:)]) {
         
         [self.delegate pageViewController:self willTransitionToViewControllers:pendingViewControllers];
@@ -191,10 +188,13 @@ static NSString *const LTPageViewControllerContentScrollViewContentOffsetKVOKeyP
 
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed{
     
-    self.currentViewController = [self.pageViewController.viewControllers lastObject];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:didTransitionToViewController:)]) {
+    if (completed) {
         
-        [self.delegate pageViewController:self didTransitionToViewController:self.currentViewController];
+        self.currentViewController = [self.pageViewController.viewControllers lastObject];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:didTransitionToViewController:)]) {
+            
+            [self.delegate pageViewController:self didTransitionToViewController:self.currentViewController];
+        }
     }
 }
 

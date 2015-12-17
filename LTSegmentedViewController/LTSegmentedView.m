@@ -34,18 +34,19 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
         _p_mItems = [items mutableCopy];
         
         _contentView = ({
-        
+            
             UIScrollView *contentView = [[UIScrollView alloc] initWithFrame:CGRectZero];
             contentView.translatesAutoresizingMaskIntoConstraints = NO;
             contentView.showsHorizontalScrollIndicator = NO;
             contentView.showsVerticalScrollIndicator = NO;
+            contentView.scrollsToTop = NO;
             [self addSubview:contentView];
             
             contentView;
         });
         
         _containerView = ({
-        
+            
             OAStackView *stackView = [[OAStackView alloc] initWithArrangedSubviews:items];
             stackView.translatesAutoresizingMaskIntoConstraints = NO;
             stackView.axis = UILayoutConstraintAxisHorizontal;
@@ -64,7 +65,7 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
             view;
         });
         
-        NSArray *v_ContentView_Constraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_contentView][_seperateLineView(1)]|" options:(NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing) metrics:nil views:NSDictionaryOfVariableBindings(_contentView, _seperateLineView)];
+        NSArray *v_ContentView_Constraint = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_contentView][_seperateLineView(1@750)]|" options:(NSLayoutFormatAlignAllLeading | NSLayoutFormatAlignAllTrailing) metrics:nil views:NSDictionaryOfVariableBindings(_contentView, _seperateLineView)];
         NSArray *h_ContentView_Constraint = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_contentView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentView)];
         
         NSLayoutConstraint *leading_ContainerView_Constraint = [NSLayoutConstraint constraintWithItem:_containerView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeLeading multiplier:1.f constant:0.f];
@@ -86,8 +87,8 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
 
 - (void) layoutSubviews{
     
-    [super layoutSubviews];
     [self reloadItems];
+    [super layoutSubviews];
 }
 
 #pragma mark -Public Methods
@@ -125,6 +126,16 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
     [self.containerView insertArrangedSubview:item atIndex:index];
     [self.p_mItems insertObject:item atIndex:index];
     [self reloadItems];
+}
+
+- (UIView*) itemAtIndex:(NSInteger) index{
+    
+    if (index >= 0 && index < self.p_mItems.count) {
+        
+        return self.p_mItems[index];
+    }
+    
+    return nil;
 }
 
 #pragma mark -Private Methods
@@ -255,7 +266,7 @@ static NSInteger const kLTSegmentedViewDefaultNumberOfItemsPerScreen = 4;
 #pragma mark -Protocol
 #pragma mark LTSegmentedViewProtocol <NSObject>
 - (void) segmentedView:(UIView<LTSegmentedViewProtocol>*) segmentedView didSelectedItemAtIndex:(NSInteger) index{
-
+    
     if (index != NSNotFound) {
         
         self.selectedIndex = index;

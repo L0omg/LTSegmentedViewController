@@ -11,14 +11,13 @@
 #import "LTSegmentedViewItemProtocol.h"
 
 #pragma mark -Constant Define
-static const CGFloat LTSegmentedItemDefaultTitleNormalFontSize = 10;
-static const CGFloat LTSegmentedItemDefaultTitleSelectedFontSize = 25;
 static const struct LTColor LTSegmentedItemDefaultTitleNormalColor = {0x00, 0x00, 0xFF, 1};
 static const struct LTColor LTSegmentedItemDefaultTitleSelectedColor = {0x33, 0x33, 0x33, 1};
 
 @interface LTSegmentedItem()<UIGestureRecognizerDelegate, LTSegmentedViewItemProtocol>
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, assign) CGFloat percent;
 @end
 
 @implementation LTSegmentedItem
@@ -29,9 +28,10 @@ static const struct LTColor LTSegmentedItemDefaultTitleSelectedColor = {0x33, 0x
     if (self) {
         
         _titleNormalColor = LTSegmentedItemDefaultTitleNormalColor;
-        _titleNormalFontSize = LTSegmentedItemDefaultTitleNormalFontSize;
         _titleSelectedColor = LTSegmentedItemDefaultTitleSelectedColor;
-        _titleSelectedFontSize = LTSegmentedItemDefaultTitleSelectedFontSize;
+        
+        _minimumScale = 18.f / 20.f;
+        _maximumScale = 1.f;
         
         _contentView = ({
             
@@ -50,7 +50,7 @@ static const struct LTColor LTSegmentedItemDefaultTitleSelectedColor = {0x33, 0x
             label.textAlignment = NSTextAlignmentCenter;
             label.text = title;
             label.textColor = LTColorToUIColor(_titleNormalColor);
-            label.font = [UIFont systemFontOfSize:_titleNormalFontSize];
+            label.font = [UIFont systemFontOfSize:20];
             [label setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh + 1 forAxis:UILayoutConstraintAxisHorizontal];
             [_contentView addSubview:label];
             
@@ -69,6 +69,7 @@ static const struct LTColor LTSegmentedItemDefaultTitleSelectedColor = {0x33, 0x
         [NSLayoutConstraint fm_ActiveConstraints:h_TitleLabel_Constraints toView:_contentView];
         
         _clickAction = action;
+        self.percent = 0.f;
         
         [self addTarget:self action:@selector(onClickSelf:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -103,26 +104,22 @@ static const struct LTColor LTSegmentedItemDefaultTitleSelectedColor = {0x33, 0x
 #pragma mark 
 - (void) segmentedView:(UIView*) segmentedView willSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent{
     
-    self.titleLabel.font = [UIFont systemFontOfSize:((self.titleSelectedFontSize - self.titleNormalFontSize) * percent) + self.titleNormalFontSize];
-    self.titleLabel.textColor = LTColorToUIColor(LTGradualColor(self.titleNormalColor, self.titleSelectedColor, percent));
+    self.percent = percent;
 }
 
 - (void) segmentedView:(UIView*) segmentedView didSelectItem:(UIView<LTSegmentedViewItemProtocol>*) item{
     
-    self.titleLabel.textColor = LTColorToUIColor(self.titleSelectedColor);
-    self.titleLabel.font = [UIFont systemFontOfSize:self.titleSelectedFontSize];
+    self.percent = 1;
 }
 
 - (void) segmentedView:(UIView*) segmentedView willDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item percent:(CGFloat) percent{
     
-    self.titleLabel.font = [UIFont systemFontOfSize:((self.titleSelectedFontSize - self.titleNormalFontSize) * percent) + self.titleNormalFontSize];
-    self.titleLabel.textColor = LTColorToUIColor(LTGradualColor(self.titleNormalColor, self.titleSelectedColor, percent));
+    self.percent = percent;
 }
 
 - (void) segmentedView:(UIView*) segmentedView didDeselectItem:(UIView<LTSegmentedViewItemProtocol>*) item{
     
-    self.titleLabel.textColor = LTColorToUIColor(self.titleNormalColor);
-    self.titleLabel.font = [UIFont systemFontOfSize:self.titleNormalFontSize];
+    self.percent = 0;
 }
 
 #pragma mark -Accessor
@@ -133,6 +130,13 @@ static const struct LTColor LTSegmentedItemDefaultTitleSelectedColor = {0x33, 0x
         _contentOffset = contentOffset;
         [self invalidateIntrinsicContentSize];
     }
+}
+
+- (void)setPercent:(CGFloat)percent{
+    
+    CGFloat scale = self.minimumScale + (self.maximumScale - self.minimumScale) * percent;
+    self.titleLabel.layer.affineTransform = CGAffineTransformMakeScale(scale, scale);
+    self.titleLabel.textColor = LTColorToUIColor(LTGradualColor(self.titleNormalColor, self.titleSelectedColor, percent));
 }
 
 @end
